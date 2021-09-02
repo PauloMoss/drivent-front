@@ -5,12 +5,14 @@ import Typography from "@material-ui/core/Typography";
 import useApi from "../../hooks/useApi";
 
 import Tickets from "./Tickets";
+import Accommodation from "./Accommodation";
 
 export default function PaymentForm() {
   const { enrollment } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState();
-          
+  const [selectedAccommodation, setSelectedAccommodation] = useState();
+  
   useEffect(() => {
     enrollment.getPersonalInformations().then(response => {
       if (response.status !== 200) {
@@ -19,6 +21,8 @@ export default function PaymentForm() {
       setIsEnrolled(true);
     });
   }, []);
+
+  const presential = selectedTicket === "Presencial";
   
   return (
     <>
@@ -26,9 +30,15 @@ export default function PaymentForm() {
       {
         isEnrolled
           ? <Tickets setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} />
+            
           : <NoEnrollmentWarning variant="h6">
               Você precisa completar sua inscrição antes<br/> de prosseguir pra escolha de ingresso
           </NoEnrollmentWarning>
+      }
+      {
+        presential
+          ? <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation}/>
+          : ""
       }
     </>
   );
