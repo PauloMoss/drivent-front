@@ -1,23 +1,35 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
-import { useState } from "react";
+import useApi from "../../hooks/useApi";
 
-export default function TicketTypeSelect() {
-  const [ticketType, setTicketType] = useState();
+export default function Tickets() {
+  const [selectedTicket, setSelectedTicket] = useState();
+  const [tickets, setTickets] = useState();
+  const { ticket } = useApi();
 
-  function selectTicketType(type) {
-    setTicketType(type);
+  function selectTicket(type) {
+    setSelectedTicket(type);
   }
+
+  useEffect(() => {
+    ticket.getTicketsInfo().then(response => {
+      if (response.status !== 200) {
+        return;
+      }
+      setTickets(response.data);
+    });
+  }, []);
 
   return (
     <>
       <StyledTypography variant="h6">Primeiro, escolha sua modalidade de ingresso</StyledTypography>
       <OptionBoxContainer>
-        <OptionBox onClick={(e) => selectTicketType("Presencial")} active={ticketType === "Presencial" ? true : false}>
+        <OptionBox onClick={(e) => selectTicket("Presencial")} active={selectedTicket === "Presencial" ? true : false}>
           <Description>Presencial</Description>
           <Price>R$ 250</Price>
         </OptionBox>
-        <OptionBox onClick={(e) => selectTicketType("Online")} active={ticketType === "Online" ? true : false}>
+        <OptionBox onClick={(e) => selectTicket("Online")} active={selectedTicket === "Online" ? true : false}>
           <Description>Online</Description>
           <Price>R$ 100</Price>
         </OptionBox>

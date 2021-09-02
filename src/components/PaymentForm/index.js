@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 
 import useApi from "../../hooks/useApi";
 
-import TicketTypeSelect from "./TicketTypeSelect";
+import Tickets from "./Tickets";
 
 export default function PaymentForm() {
   const { enrollment } = useApi();
@@ -24,7 +24,7 @@ export default function PaymentForm() {
       <StyledTypography variant="h4" color="initial">Ingresso e pagamento</StyledTypography>
       {
         isEnrolled
-          ? <TicketTypeSelect />
+          ? <Tickets />
           : <NoEnrollmentWarning variant="h6">
               Você precisa completar sua inscrição antes<br/> de prosseguir pra escolha de ingresso
           </NoEnrollmentWarning>
