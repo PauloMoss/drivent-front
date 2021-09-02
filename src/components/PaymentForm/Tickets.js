@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
+import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
 
@@ -17,10 +18,11 @@ export default function Tickets({ selectedTicket, setSelectedTicket }) {
 
   useEffect(() => {
     ticket.getTicketsInfo().then(response => {
-      if (response.status !== 200) {
-        return;
-      }
       setTickets(response.data);
+    }).catch((error) => {
+      toast("Não foi possível");
+      /* eslint-disable-next-line no-console */
+      console.log(error);
     });
   }, []);
 
