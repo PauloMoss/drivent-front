@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
+import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
 
@@ -13,10 +14,12 @@ export default function PaymentForm() {
           
   useEffect(() => {
     enrollment.getPersonalInformations().then(response => {
-      if (response.status !== 200) {
-        return;
-      }
-      setIsEnrolled(true);
+      //setIsEnrolled(true);
+      throw new Error();
+    }).catch((error) => {
+      toast("Não foi possível");
+      /* eslint-disable-next-line no-console */
+      console.log(error);
     });
   }, []);
   
