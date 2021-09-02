@@ -7,7 +7,6 @@ export default function TicketTypeSelect() {
 
   function selectTicketType(type) {
     setTicketType(type);
-    console.log(type);
   }
 
   return (

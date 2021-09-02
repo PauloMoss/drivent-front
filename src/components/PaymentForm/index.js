@@ -18,8 +18,6 @@ export default function PaymentForm() {
       setIsEnrolled(true);
     });
   }, []);
-
-  console.log(isEnrolled);
   
   return (
     <>
