@@ -9,6 +9,7 @@ import Tickets from "./Tickets";
 export default function PaymentForm() {
   const { enrollment } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState();
           
   useEffect(() => {
     enrollment.getPersonalInformations().then(response => {
@@ -24,7 +25,7 @@ export default function PaymentForm() {
       <StyledTypography variant="h4" color="initial">Ingresso e pagamento</StyledTypography>
       {
         isEnrolled
-          ? <Tickets />
+          ? <Tickets setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} />
           : <NoEnrollmentWarning variant="h6">
               Você precisa completar sua inscrição antes<br/> de prosseguir pra escolha de ingresso
           </NoEnrollmentWarning>
