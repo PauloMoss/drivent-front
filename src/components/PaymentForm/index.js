@@ -23,16 +23,16 @@ export default function PaymentForm() {
     });
   }, []);
 
-  const isPresential = selectedTicket?.name === "Presencial";
   const isOnline = selectedTicket?.name === "Online";
   let selectedOrder = {};
-
+  
   if(isOnline)
   {
-    selectedOrder = selectedTicket;
+    selectedOrder = { isOnline: true, hasHotel: false, price: selectedTicket.price };
     selectedAccommodation && setSelectedAccommodation(null);
   } else if(selectedAccommodation) {
-    selectedOrder.name = `${selectedTicket.name} + ${selectedAccommodation.name}`;
+    selectedOrder.isOnline = false;
+    selectedOrder.hasHotel = selectedAccommodation.isRequested;
     selectedOrder.price = selectedTicket.price + selectedAccommodation.price;
   }
   return (
@@ -48,9 +48,9 @@ export default function PaymentForm() {
       }
       {
         selectedTicket 
-          ? isPresential
-            ? <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation}/>
-            : <TotalTicketPrice selectedOrder={selectedOrder}/>
+          ? isOnline
+            ? <TotalTicketPrice selectedOrder={selectedOrder}/>
+            : <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation}/>
           : ""
       }
       {

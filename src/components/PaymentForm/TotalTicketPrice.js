@@ -16,6 +16,7 @@ export default function TotalTicketPrice({ selectedOrder }) {
     userId: userData.user.id,
     ticketInfo: selectedOrder,
   };
+  
   const totalPrice = selectedOrder.price;
   const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
