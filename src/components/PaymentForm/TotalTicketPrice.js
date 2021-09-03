@@ -1,13 +1,10 @@
-import { useContext, useEffect, useState } from "react";
-import styled from "styled-components";
-import Typography from "@material-ui/core/Typography";
+import { useContext, useState } from "react";
 
 import useApi from "../../hooks/useApi";
 
-import { OptionBoxWrapper } from "./OptionBoxWrapper";
-import { OptionBox, Description, Price, StyledTypography } from "./OptionBox";
+import { StyledTypography } from "./OptionBox";
+import Button from "../Form/Button";
 
-import { BookingButton } from "./BookingButton";
 import UserContext from "../../contexts/UserContext";
 
 export default function TotalTicketPrice({ selectedTicket }) {
@@ -39,9 +36,9 @@ export default function TotalTicketPrice({ selectedTicket }) {
       <StyledTypography variant="h6">
         {`Fechado! O total ficou em R$ ${totalPrice}. Agora é só confirmar:`}
       </StyledTypography>
-      <BookingButton onClick={sendBookingInfo} disabled={disabled}>
+      <Button onClick={sendBookingInfo} disabled={disabled}>
         RESERVAR INGRESSO
-      </BookingButton>
+      </Button>
     </>
   );
 }
