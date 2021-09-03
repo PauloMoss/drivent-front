@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import { OptionBoxWrapper } from "./OptionBoxWrapper";
-import { OptionBox, Description, Price, StyledTypography } from "./OptionBox";
+import SectionTitle from "../Form/SectionTitle";
+import { OptionBox, Description, Price } from "./OptionBox";
 
 export default function TicketOptions({ title, selectedOption, setSelectedOption, apiFunction }) {
   const [options, setOptions] = useState();
@@ -20,7 +21,7 @@ export default function TicketOptions({ title, selectedOption, setSelectedOption
 
   return (
     <>
-      <StyledTypography variant="h6">{title}</StyledTypography>
+      <SectionTitle>{title}</SectionTitle>
       <OptionBoxWrapper>
         {options?.map(option => (
           <OptionBox key={option.id} onClick={(e) => setSelectedOption(option)} active={selectedOption === option ? true : false}>
