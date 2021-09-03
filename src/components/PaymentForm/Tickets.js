@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-import Typography from "@material-ui/core/Typography";
 import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
 
 import { OptionBoxWrapper } from "./OptionBoxWrapper";
 import { OptionBox, Description, Price } from "./OptionBox";
+import  SectionTitle  from "../Form/SectionTitle";
 
 import TotalTicketPrice from "./TotalTicketPrice";
 
@@ -30,9 +29,7 @@ export default function Tickets({ selectedTicket, setSelectedTicket }) {
 
   return (
     <>
-      <StyledTypography variant="h6">
-        Primeiro, escolha sua modalidade de ingresso
-      </StyledTypography>
+      <SectionTitle>Primeiro, escolha sua modalidade de ingresso</SectionTitle>
       <OptionBoxWrapper>
         {tickets?.map((ticket) => (
           <OptionBox
@@ -56,8 +53,3 @@ export default function Tickets({ selectedTicket, setSelectedTicket }) {
   );
 }
 
-const StyledTypography = styled(Typography)`
-  margin-bottom: 17px !important;
-  color: #8e8e8e;
-  margin-top: 37px !important;
-`;
