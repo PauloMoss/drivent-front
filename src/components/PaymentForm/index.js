@@ -5,10 +5,12 @@ import Typography from "@material-ui/core/Typography";
 import useApi from "../../hooks/useApi";
 
 import Tickets from "./Tickets";
+import ReservationOverview from "./ReservationOverview";
 
 export default function PaymentForm() {
   const { enrollment } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
+  const [hasReservation, setHasReservation] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState();
           
   useEffect(() => {
@@ -18,6 +20,7 @@ export default function PaymentForm() {
       }
       setIsEnrolled(true);
     });
+    setHasReservation(true);
   }, []);
   
   return (
@@ -25,7 +28,7 @@ export default function PaymentForm() {
       <StyledTypography variant="h4" color="initial">Ingresso e pagamento</StyledTypography>
       {
         isEnrolled
-          ? <Tickets setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} />
+          ? hasReservation?<ReservationOverview setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} />:<Tickets setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} />
           : <NoEnrollmentWarning variant="h6">
               Você precisa completar sua inscrição antes<br/> de prosseguir pra escolha de ingresso
           </NoEnrollmentWarning>
