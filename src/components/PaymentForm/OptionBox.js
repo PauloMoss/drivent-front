@@ -26,8 +26,3 @@ export const Price = styled.div`
   color: #898989;
 `;
 
-export const StyledTypography = styled(Typography)`
-margin-bottom: 17px!important;
-color: #8E8E8E;
-margin-top: 37px!important;
-`;
