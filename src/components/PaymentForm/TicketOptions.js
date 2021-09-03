@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-import Typography from "@material-ui/core/Typography";
 
 import { OptionBoxWrapper } from "./OptionBoxWrapper";
-import { OptionBox, Description, Price } from "./OptionBox";
+import { OptionBox, Description, Price, StyledTypography } from "./OptionBox";
 
 export default function TicketOptions({ title, selectedOption, setSelectedOption, apiFunction }) {
   const [options, setOptions] = useState();
@@ -22,7 +20,7 @@ export default function TicketOptions({ title, selectedOption, setSelectedOption
       <StyledTypography variant="h6">{title}</StyledTypography>
       <OptionBoxWrapper>
         {options?.map(option => (
-          <OptionBox key={option.id} onClick={(e) => setSelectedOption(option.name)} active={selectedOption === option.name ? true : false}>
+          <OptionBox key={option.id} onClick={(e) => setSelectedOption(option)} active={selectedOption === option ? true : false}>
             <Description>{option.name}</Description>
             <Price>R$ {option.price}</Price>
           </OptionBox>
@@ -31,9 +29,3 @@ export default function TicketOptions({ title, selectedOption, setSelectedOption
     </>
   );
 }
-
-const StyledTypography = styled(Typography)`
-  margin-bottom: 17px!important;
-  color: #8E8E8E;
-  margin-top: 37px!important;
-`;

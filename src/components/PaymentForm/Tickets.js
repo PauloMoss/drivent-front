@@ -12,3 +12,4 @@ export default function Tickets({ selectedTicket, setSelectedTicket }) {
     <TicketOptions title={title} selectedOption={selectedTicket} setSelectedOption={setSelectedTicket} apiFunction={apiFunction}/>
   );
 }
+

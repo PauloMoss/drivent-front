@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
+import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
+import TotalTicketPrice from "./TotalTicketPrice";
 
 import Tickets from "./Tickets";
 import Accommodation from "./Accommodation";
@@ -15,15 +17,24 @@ export default function PaymentForm() {
   
   useEffect(() => {
     enrollment.getPersonalInformations().then(response => {
-      if (response.status !== 200) {
-        return;
-      }
       setIsEnrolled(true);
+    }).catch((error) => {
+      toast("Não foi possível");
     });
   }, []);
 
-  const presential = selectedTicket === "Presencial";
-  
+  const isPresential = selectedTicket?.name === "Presencial";
+  const isOnline = selectedTicket?.name === "Online";
+  let selectedOrder = {};
+
+  if(isOnline)
+  {
+    selectedOrder = selectedTicket;
+    selectedAccommodation && setSelectedAccommodation(null);
+  } else if(selectedAccommodation) {
+    selectedOrder.name = `${selectedTicket.name} + ${selectedAccommodation.name}`;
+    selectedOrder.price = selectedTicket.price + selectedAccommodation.price;
+  }
   return (
     <>
       <StyledTypography variant="h4" color="initial">Ingresso e pagamento</StyledTypography>
@@ -36,8 +47,15 @@ export default function PaymentForm() {
           </NoEnrollmentWarning>
       }
       {
-        presential
-          ? <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation}/>
+        selectedTicket 
+          ? isPresential
+            ? <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation}/>
+            : <TotalTicketPrice selectedOrder={selectedOrder}/>
+          : ""
+      }
+      {
+        selectedAccommodation ?
+          <TotalTicketPrice selectedOrder={selectedOrder}/>
           : ""
       }
     </>
