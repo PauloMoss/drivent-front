@@ -14,9 +14,13 @@ const CreditCard = () => {
     setFocus(e.target.name);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <StyledCreditCard>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="payment">
           <Cards
             cvc={cvc}
@@ -48,7 +52,7 @@ const CreditCard = () => {
             />
             <div className="double">
               <input
-                minlength="4"
+                minlength="5"
                 maxlength="5"
                 required
                 type="text"

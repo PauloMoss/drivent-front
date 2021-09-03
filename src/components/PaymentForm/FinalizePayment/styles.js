@@ -40,6 +40,30 @@ const StyledPayment = styled.div`
     }
 `;
 
+const StyledPaymentDone = styled.div`
+    display: flex;
+    align-items: center;
+
+    margin-top: 20px;
+
+    svg {
+        width: 42px;
+        height: 42px;
+
+        color: #36b853;
+    }
+
+    p {
+        font-size: 16px;
+        color: #454545;
+        margin: 4px;
+
+        :first-of-type {
+            font-weight: 700;
+        }
+    }
+`;
+
 const StyledCreditCard = styled.div`
     form {
         diplay: flex;
@@ -102,4 +126,4 @@ const StyledCreditCard = styled.div`
     }
 `;
 
-export { StyledPayment, StyledCreditCard };
+export { StyledPayment, StyledCreditCard, StyledPaymentDone };

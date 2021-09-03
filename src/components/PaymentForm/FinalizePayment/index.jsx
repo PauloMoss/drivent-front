@@ -1,5 +1,6 @@
 import React from "react";
 import CreditCard from "./CreditCard";
+import PaymentDone from "./PaymentDone";
 import { StyledPayment } from "./styles";
 
 const FinalizePayment = () => {
@@ -11,7 +12,7 @@ const FinalizePayment = () => {
         <p>R$ 600</p>
       </div>
       <h2>Pagamento</h2>
-      <CreditCard />
+      <PaymentDone />
     </StyledPayment>
   );
 };
