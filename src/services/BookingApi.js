@@ -1,7 +1,7 @@
 import api from "./api";
 
 export default class BookingApi {
-  postBookingInfo() {
-    return api.post("/booking");
+  postBookingInfo(bookingInfo, config) {
+    return api.post("/booking", bookingInfo, config);
   }
 }

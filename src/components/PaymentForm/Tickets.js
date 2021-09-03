@@ -37,8 +37,7 @@ export default function Tickets({ selectedTicket, setSelectedTicket }) {
         {tickets?.map((ticket) => (
           <OptionBox
             key={ticket.id}
-            onClick={(e) => {
-              console.log(ticket);
+            onClick={(e) => { 
               selectTicket(ticket);
             }}
             active={selectedTicket?.name === ticket.name ? true : false}

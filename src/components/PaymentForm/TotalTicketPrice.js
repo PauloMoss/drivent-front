@@ -21,10 +21,12 @@ export default function TotalTicketPrice({ selectedTicket }) {
     ticketInfo: selectedTicket,
   };
   const totalPrice = selectedTicket.price;
+  const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
   function sendBookingInfo() {
     setDisabled(true);
-    booking.postBookingInfo
+    booking
+      .postBookingInfo(bookingInfo, config)
       .then(() => {
         setDisabled(false);
       })
