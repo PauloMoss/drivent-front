@@ -17,8 +17,6 @@ export default function PaymentForm() {
       setIsEnrolled(true);
     }).catch((error) => {
       toast("Não foi possível");
-      /* eslint-disable-next-line no-console */
-      console.log(error);
     });
   }, []);
   
