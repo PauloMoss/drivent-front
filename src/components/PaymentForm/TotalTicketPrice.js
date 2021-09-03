@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 
 import useApi from "../../hooks/useApi";
-import { StyledTypography } from "./OptionBox";
-
+import  SectionTitle  from "../Form/SectionTitle";
 import Button from "../Form/Button";
 import UserContext from "../../contexts/UserContext";
+import { toast } from "react-toastify";
 
 export default function TotalTicketPrice({ selectedOrder }) {
   const { userData } = useContext(UserContext);
@@ -29,13 +29,12 @@ export default function TotalTicketPrice({ selectedOrder }) {
       })
       .catch(() => {
         setDisabled(false);
+        toast("Não foi possível fazer a reserva, tente novamente");
       });
   }
   return (
     <>
-      <StyledTypography variant="h6">
-        {`Fechado! O total ficou em R$ ${totalPrice}. Agora é só confirmar:`}
-      </StyledTypography>
+      <SectionTitle>{`Fechado! O total ficou em R$ ${totalPrice}. Agora é só confirmar:`}</SectionTitle>
       <Button onClick={sendBookingInfo} disabled={disabled}>
         RESERVAR INGRESSO
       </Button>

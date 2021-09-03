@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import { OptionBoxWrapper } from "./OptionBoxWrapper";
 import { OptionBox, Description, Price, StyledTypography } from "./OptionBox";
@@ -12,6 +13,8 @@ export default function TicketOptions({ title, selectedOption, setSelectedOption
         return;
       }
       setOptions(response.data);
+    }).catch((error) => {
+      toast("Não foi possível");
     });
   }, []);
 
