@@ -1,11 +1,9 @@
 import { useContext, useState } from "react";
-
 import useApi from "../../hooks/useApi";
-
 import { StyledTypography } from "./OptionBox";
 import Button from "../Form/Button";
-
 import UserContext from "../../contexts/UserContext";
+import { toast } from "react-toastify";
 
 export default function TotalTicketPrice({ selectedTicket }) {
   const { userData } = useContext(UserContext);
@@ -29,6 +27,7 @@ export default function TotalTicketPrice({ selectedTicket }) {
       })
       .catch(() => {
         setDisabled(false);
+        toast("Não foi possível fazer a reserva, tente novamente");
       });
   }
   return (
