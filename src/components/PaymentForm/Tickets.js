@@ -21,8 +21,6 @@ export default function Tickets({ selectedTicket, setSelectedTicket }) {
       setTickets(response.data);
     }).catch((error) => {
       toast("Não foi possível");
-      /* eslint-disable-next-line no-console */
-      console.log(error);
     });
   }, []);
 
