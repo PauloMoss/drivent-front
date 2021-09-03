@@ -83,7 +83,7 @@ export default function PersonalInformationForm() {
       addressDetail: "",
     },
   });
-
+  
   useEffect(() => {
     enrollment.getPersonalInformations().then(response => {
       if (response.status !== 200) {
@@ -136,7 +136,7 @@ export default function PersonalInformationForm() {
       });
     }
   };
-
+  
   return (
     <>
       <StyledTypography variant="h4">Suas Informações</StyledTypography>
