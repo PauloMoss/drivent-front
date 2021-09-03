@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
+
 import useApi from "../../hooks/useApi";
 import  SectionTitle  from "../Form/SectionTitle";
 import Button from "../Form/Button";
 import UserContext from "../../contexts/UserContext";
 import { toast } from "react-toastify";
 
-export default function TotalTicketPrice({ selectedTicket }) {
+export default function TotalTicketPrice({ selectedOrder }) {
   const { userData } = useContext(UserContext);
   const { booking } = useApi();
 
@@ -13,9 +14,10 @@ export default function TotalTicketPrice({ selectedTicket }) {
 
   const bookingInfo = {
     userId: userData.user.id,
-    ticketInfo: selectedTicket,
+    ticketInfo: selectedOrder,
   };
-  const totalPrice = selectedTicket.price;
+  
+  const totalPrice = selectedOrder.price;
   const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
   function sendBookingInfo() {
@@ -39,3 +41,4 @@ export default function TotalTicketPrice({ selectedTicket }) {
     </>
   );
 }
+
