@@ -1,3 +1,4 @@
+import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 
 export const OptionBox = styled.div`
@@ -24,3 +25,4 @@ export const Price = styled.div`
   font-size: 14px;
   color: #898989;
 `;
+

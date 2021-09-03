@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-import Typography from "@material-ui/core/Typography";
 import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
 
 import { OptionBoxWrapper } from "./OptionBoxWrapper";
 import { OptionBox, Description, Price } from "./OptionBox";
+import  SectionTitle  from "../Form/SectionTitle";
+
+import TotalTicketPrice from "./TotalTicketPrice";
 
 export default function Tickets({ selectedTicket, setSelectedTicket }) {
   const [tickets, setTickets] = useState();
   const { ticket } = useApi();
+
+  const onlineTicketName = "Online";
 
   function selectTicket(type) {
     setSelectedTicket(type);
@@ -26,21 +29,27 @@ export default function Tickets({ selectedTicket, setSelectedTicket }) {
 
   return (
     <>
-      <StyledTypography variant="h6">Primeiro, escolha sua modalidade de ingresso</StyledTypography>
+      <SectionTitle>Primeiro, escolha sua modalidade de ingresso</SectionTitle>
       <OptionBoxWrapper>
-        {tickets?.map(ticket => (
-          <OptionBox key={ticket.id} onClick={(e) => selectTicket(ticket.name)} active={selectedTicket === ticket.name ? true : false}>
+        {tickets?.map((ticket) => (
+          <OptionBox
+            key={ticket.id}
+            onClick={(e) => { 
+              selectTicket(ticket);
+            }}
+            active={selectedTicket?.name === ticket.name ? true : false}
+          >
             <Description>{ticket.name}</Description>
             <Price>R$ {ticket.price}</Price>
           </OptionBox>
         ))}
       </OptionBoxWrapper>
+      {selectedTicket?.name === onlineTicketName ? (
+        <TotalTicketPrice selectedTicket={selectedTicket} />
+      ) : (
+        ""
+      )}
     </>
   );
 }
 
-const StyledTypography = styled(Typography)`
-  margin-bottom: 17px!important;
-  color: #8E8E8E;
-  margin-top: 37px!important;
-`;
