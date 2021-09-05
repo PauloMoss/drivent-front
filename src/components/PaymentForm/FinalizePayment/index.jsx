@@ -12,6 +12,7 @@ const FinalizePayment = () => {
         <p>R$ 600</p>
       </div>
       <h2>Pagamento</h2>
+      {/* <CreditCard /> */}
       <PaymentDone />
     </StyledPayment>
   );
