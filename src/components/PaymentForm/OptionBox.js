@@ -24,3 +24,4 @@ export const Price = styled.div`
   font-size: 14px;
   color: #898989;
 `;
+

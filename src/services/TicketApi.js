@@ -4,4 +4,8 @@ export default class TicketApi {
   getTicketsInfo() {
     return api.get("/tickets");
   }
+
+  getAccommodationsInfo() {
+    return api.get("/tickets/accommodation");
+  }
 }
