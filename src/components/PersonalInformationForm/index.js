@@ -83,13 +83,13 @@ export default function PersonalInformationForm() {
       addressDetail: "",
     },
   });
-  
+
   useEffect(() => {
     enrollment.getPersonalInformations().then(response => {
       if (response.status !== 200) {
         return;
       }
-      
+
       const { name, cpf, birthday, phone, address } = response.data;
 
       setData({
@@ -136,7 +136,7 @@ export default function PersonalInformationForm() {
       });
     }
   };
-  
+
   return (
     <>
       <StyledTypography variant="h4">Suas Informações</StyledTypography>
@@ -271,7 +271,7 @@ export default function PersonalInformationForm() {
               onChange={handleChange("addressDetail")}
             />
           </InputWrapper>
-          
+
           <SubmitContainer>
             <Button type="submit" disabled={dynamicInputIsLoading}>
               Salvar

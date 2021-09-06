@@ -1,45 +1,5 @@
 import styled from "styled-components";
 
-const StyledPayment = styled.div`
-    display: flex;
-    flex-flow: column nowrap;
-
-    width: 710px;
-    height: 510px;
-
-    .ticket {
-        display: flex;
-        flex-flow: column nowrap;
-        align-items: center;
-        justify-content: center;
-
-        width: 290px;
-        height: 110px;
-        margin-top: 20px;
-        border-radius: 20px;
-
-        background-color: #ffeed2;
-
-        p {
-            margin: 5px;
-
-            :first-of-type {
-                color: #454545;
-            }
-
-            :last-of-type {
-                color: #898989;
-            }
-        }
-    }
-
-    > h2 {
-        margin: 30px 0 0;
-        font-size: 20px;
-        color: #8e8e8e;
-    }
-`;
-
 const StyledPaymentDone = styled.div`
     display: flex;
     align-items: center;
@@ -113,17 +73,7 @@ const StyledCreditCard = styled.div`
                 border-color: #8e8e8e;
             }
         }
-
-        button {
-            margin-top: 40px;
-            font-size: 14px;
-            border: none;
-            background-color: #e0e0e0;
-            height: 35px;
-            width: 200px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, .25);
-        }
     }
 `;
 
-export { StyledPayment, StyledCreditCard, StyledPaymentDone };
+export { StyledCreditCard, StyledPaymentDone };

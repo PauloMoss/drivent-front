@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 import { toast } from "react-toastify";
@@ -7,11 +7,12 @@ import useApi from "../../hooks/useApi";
 import TotalTicketPrice from "./TotalTicketPrice";
 
 import Tickets from "./Tickets";
-import FinalizePayment from "./FinalizePayment";
 import ReservationOverview from "./ReservationOverview";
 import Accommodation from "./Accommodation";
+import UserContext from "../../contexts/UserContext";
 
 export default function PaymentForm() {
+  const { userData } = useContext(UserContext);
   const { enrollment } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [hasReservation, setHasReservation] = useState(false);
@@ -19,8 +20,8 @@ export default function PaymentForm() {
   const [selectedAccommodation, setSelectedAccommodation] = useState();
 
   useEffect(() => {
-    enrollment.getPersonalInformations().then(response => {
-      setIsEnrolled(true); // bugado, n deveria ser sempre true
+    enrollment.getPersonalInformations(userData.user).then(response => {
+      if (response.data) setIsEnrolled(true);
     }).catch((error) => {
       toast("Não foi possível");
     });
@@ -41,30 +42,27 @@ export default function PaymentForm() {
   return (
     <>
       <StyledTypography variant="h4" color="initial">Ingresso e pagamento</StyledTypography>
-      {/* {
+      {
         isEnrolled
-          ? hasReservation?<ReservationOverview setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} />:
+          ? (hasReservation ? <ReservationOverview setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} /> :
             <>
               <Tickets setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} />
               {
                 selectedTicket
                   ? isOnline
-                    ? <TotalTicketPrice selectedOrder={selectedOrder}/>
-                    : <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation}/>
+                    ? <TotalTicketPrice selectedOrder={selectedOrder} />
+                    : <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation} />
                   : ""
               }
               {
                 selectedAccommodation ?
-                  <TotalTicketPrice selectedOrder={selectedOrder}/>
+                  <TotalTicketPrice selectedOrder={selectedOrder} />
                   : ""
               }
-            </>
+            </>)
           : <NoEnrollmentWarning variant="h6">
-              Você precisa completar sua inscrição antes<br/> de prosseguir pra escolha de ingresso
+            Você precisa completar sua inscrição antes<br /> de prosseguir pra escolha de ingresso
           </NoEnrollmentWarning>
-      } */}
-      {
-        <FinalizePayment />
       }
     </>
   );

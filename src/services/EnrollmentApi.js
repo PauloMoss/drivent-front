@@ -10,11 +10,11 @@ export default class EnrollmentApi extends AuthenticatedApi {
     });
   }
 
-  getPersonalInformations() {
+  getPersonalInformations(user) {
     return api.get("/enrollments", {
       headers: {
         ...this.getAuthorizationHeader()
-      }
-    });
+      },
+    }, { user });
   }
 }

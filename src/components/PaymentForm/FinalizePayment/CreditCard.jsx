@@ -3,7 +3,7 @@ import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 import { StyledCreditCard } from "./styles";
 
-const CreditCard = () => {
+const CreditCard = (props) => {
   const [cvc, setCvc] = useState("");
   const [expiry, setExpiry] = useState("");
   const [focus, setFocus] = useState("");
@@ -77,7 +77,7 @@ const CreditCard = () => {
             </div>
           </div>
         </div>
-        <button type="submit">FINALIZAR PAGAMENTO</button>
+        {props.button}
       </form>
     </StyledCreditCard>
   );
