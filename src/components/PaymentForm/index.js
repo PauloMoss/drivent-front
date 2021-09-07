@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
 
 import { DashWarning } from "../Dashboard/DashWarning";
-import TicketModality from "./TicketModality/Ticket";
+import Ticket from "./TicketModality/Ticket";
 import Payment from "./Payment/Payment";
 import Overview from "./ReservationOverview/Overview";
 
@@ -52,7 +52,7 @@ export default function PaymentForm() {
             ? isPaid
               ? <Overview />
               : <Payment />
-            : <TicketModality />
+            : <Ticket />
         }
       </>
     );
