@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
 import TotalTicketPrice from "./TotalTicketPrice";
-
+import { DashWarning } from "../Dashboard/DashWarning";
 import Tickets from "./Tickets";
 import Accommodation from "./Accommodation";
 
@@ -46,9 +46,9 @@ export default function PaymentForm() {
         isEnrolled
           ? <Tickets setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} />
             
-          : <NoEnrollmentWarning variant="h6">
+          : <DashWarning variant="h6">
               Você precisa completar sua inscrição antes<br/> de prosseguir pra escolha de ingresso
-          </NoEnrollmentWarning>
+          </DashWarning>
       }
       {
         selectedTicket 
@@ -68,11 +68,4 @@ export default function PaymentForm() {
 
 const StyledTypography = styled(Typography)`
   margin-bottom: 20px!important;
-`;
-
-const NoEnrollmentWarning = styled(Typography)`
-  color: #8E8E8E;
-  text-align: center;
-  margin-top: 180px!important;
-  line-height: 23px!important;
 `;

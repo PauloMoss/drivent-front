@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
+import { DashWarning } from "../Dashboard/DashWarning";
 
 export default function HotelForm() {
   const { booking } = useApi();
@@ -13,9 +14,11 @@ export default function HotelForm() {
   useEffect(() => {
     booking.getBookingInfo()
       .then(response => {
-        const bookDetails = response.data;
-        setIsPaid(bookDetails.isPaid);
-        setIsOnline(bookDetails.isOnline);
+        if(response.status === 200) {
+          const bookDetails = response.data;
+          setIsPaid(bookDetails.isPaid);
+          setIsOnline(bookDetails.isOnline);
+        };
       })
       .catch(() => {
         toast("Não foi possível encontrar sua reserva");
@@ -28,13 +31,13 @@ export default function HotelForm() {
       {
         isPaid
           ? isOnline
-            ? <NoEnrollmentWarning variant="h6">
+            ? <DashWarning variant="h6">
               Sua modalidade de ingresso não inclui hospedagem <br/> Prossiga para a escolha de atividades
-            </NoEnrollmentWarning>
+            </DashWarning>
             : "Em breve!"
-          : <NoEnrollmentWarning variant="h6">
+          : <DashWarning variant="h6">
               Você precisa ter confirmado pagamento antes <br/> de fazer a escolha de hospedagem
-          </NoEnrollmentWarning>
+          </DashWarning>
       }
     </>
   );
@@ -42,11 +45,4 @@ export default function HotelForm() {
 
 const StyledTypography = styled(Typography)`
   margin-bottom: 20px!important;
-`;
-
-const NoEnrollmentWarning = styled(Typography)`
-  color: #8E8E8E;
-  text-align: center;
-  margin-top: 180px!important;
-  line-height: 23px!important;
 `;
