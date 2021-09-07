@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import useApi from "../../hooks/useApi";
-import  SectionTitle  from "../Form/SectionTitle";
-import Button from "../Form/Button";
+import useApi from "../../../hooks/useApi";
+import  SectionTitle  from "../../Form/SectionTitle";
+import Button from "../../Form/Button";
 import { toast } from "react-toastify";
 
 export default function TotalTicketPrice({ selectedOrder }) {

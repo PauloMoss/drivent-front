@@ -4,16 +4,17 @@ import Typography from "@material-ui/core/Typography";
 import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
-import TotalTicketPrice from "./TotalTicketPrice";
+
 import { DashWarning } from "../Dashboard/DashWarning";
-import Tickets from "./Tickets";
-import Accommodation from "./Accommodation";
+import TicketModality from "./TicketModality/Ticket";
+import Payment from "./Payment/Payment";
+import Overview from "./ReservationOverview/Overview";
 
 export default function PaymentForm() {
-  const { enrollment } = useApi();
+  const { enrollment, booking } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
-  const [selectedTicket, setSelectedTicket] = useState();
-  const [selectedAccommodation, setSelectedAccommodation] = useState();
+  const [bookDetails, setBookDetails] = useState(null);
+  const [isPaid, setIsPaid] = useState(false);
   
   useEffect(() => {
     enrollment.getPersonalInformations()
@@ -27,40 +28,45 @@ export default function PaymentForm() {
       });
   }, []);
 
-  const isOnline = selectedTicket?.name === "Online";
-  let selectedOrder = {};
-  
-  if(isOnline)
-  {
-    selectedOrder = { isOnline: true, hasHotel: false, price: selectedTicket.price };
-    selectedAccommodation && setSelectedAccommodation(null);
-  } else if(selectedAccommodation) {
-    selectedOrder.isOnline = false;
-    selectedOrder.hasHotel = selectedAccommodation.isRequested;
-    selectedOrder.price = selectedTicket.price + selectedAccommodation.price;
+  useEffect(() => {
+    if(isEnrolled) {
+      booking.getBookingInfo()
+        .then((response) => {
+          if(response.status === 200) {
+            const booked = response.data;
+            setBookDetails(booked);
+            setIsPaid(booked.isPaid);
+          };
+        })
+        .catch(() => {
+          toast("Não foi possível encontrar sua reserva");
+        });
+    }
+  }, [isEnrolled]);
+
+  function RenderProperPaymentStatus() {
+    return (
+      <>
+        {
+          bookDetails  
+            ? isPaid
+              ? <Overview />
+              : <Payment />
+            : <TicketModality />
+        }
+      </>
+    );
   }
+
   return (
     <>
       <StyledTypography variant="h4" color="initial">Ingresso e pagamento</StyledTypography>
       {
-        isEnrolled
-          ? <Tickets setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} />
-            
+        isEnrolled ? 
+          <RenderProperPaymentStatus />
           : <DashWarning variant="h6">
               Você precisa completar sua inscrição antes<br/> de prosseguir pra escolha de ingresso
           </DashWarning>
-      }
-      {
-        selectedTicket 
-          ? isOnline
-            ? <TotalTicketPrice selectedOrder={selectedOrder}/>
-            : <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation}/>
-          : ""
-      }
-      {
-        selectedAccommodation ?
-          <TotalTicketPrice selectedOrder={selectedOrder}/>
-          : ""
       }
     </>
   );
