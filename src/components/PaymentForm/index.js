@@ -16,11 +16,15 @@ export default function PaymentForm() {
   const [selectedAccommodation, setSelectedAccommodation] = useState();
   
   useEffect(() => {
-    enrollment.getPersonalInformations().then(response => {
-      response.data && setIsEnrolled(true);
-    }).catch((error) => {
-      toast("Não foi possível");
-    });
+    enrollment.getPersonalInformations()
+      .then((response) => {
+        if(response.status === 200) {
+          setIsEnrolled(true);
+        };
+      })
+      .catch(() => {
+        toast("Não foi possível encontrar sua inscrição");
+      });
   }, []);
 
   const isOnline = selectedTicket?.name === "Online";

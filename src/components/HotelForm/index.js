@@ -11,13 +11,15 @@ export default function HotelForm() {
   const [isOnline, setIsOnline] = useState(null);
   
   useEffect(() => {
-    booking.getBookingInfo().then(response => {
-      const bookDetails = response.data;
-      setIsPaid(bookDetails.isPaid);
-      setIsOnline(bookDetails.isOnline);
-    }).catch((error) => {
-      toast("Não foi possível");
-    });
+    booking.getBookingInfo()
+      .then(response => {
+        const bookDetails = response.data;
+        setIsPaid(bookDetails.isPaid);
+        setIsOnline(bookDetails.isOnline);
+      })
+      .catch(() => {
+        toast("Não foi possível encontrar sua reserva");
+      });
   }, []);
 
   return (

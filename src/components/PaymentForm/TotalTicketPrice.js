@@ -11,13 +11,14 @@ export default function TotalTicketPrice({ selectedOrder }) {
   const [disabled, setDisabled] = useState(false);
 
   const bookingInfo = {
-    ticketInfo: selectedOrder,
+    ...selectedOrder 
   };
   
   const totalPrice = selectedOrder.price;
 
   function sendBookingInfo() {
     setDisabled(true);
+    
     booking
       .postBookingInfo(bookingInfo)
       .then(() => {
