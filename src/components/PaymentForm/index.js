@@ -17,7 +17,7 @@ export default function PaymentForm() {
   
   useEffect(() => {
     enrollment.getPersonalInformations().then(response => {
-      setIsEnrolled(true);
+      response.data && setIsEnrolled(true);
     }).catch((error) => {
       toast("Não foi possível");
     });
