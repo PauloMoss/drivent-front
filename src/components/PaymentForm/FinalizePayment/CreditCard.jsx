@@ -1,26 +1,36 @@
 import { useContext, useState } from "react";
 import Cards from "react-credit-cards";
+import { toast } from "react-toastify";
 import "react-credit-cards/es/styles-compiled.css";
 import UserContext from "../../../contexts/UserContext";
 import useApi from "../../../hooks/useApi";
 import { StyledCreditCard } from "./styles";
 
 const CreditCard = (props) => {
-  const [cvc, setCvc] = useState("");
-  const [expiry, setExpiry] = useState("");
-  const [focus, setFocus] = useState("");
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
   const { booking } = useApi();
   const { userData, setUserData } = useContext(UserContext);
+  const [data, setData] = useState({
+    cvc: "",
+    expiry: "",
+    focus: "",
+    name: "",
+    number: "",
+  });
 
   const handleInputFocus = (e) => {
-    setFocus(e.target.name);
+    setData({ ...data, focus: e.target.name });
+  };
+
+  const handleChange = (e, name) => {
+    const newData = { ...data };
+    newData[name] = e.target.value;
+    setData(newData);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+    const { cvc, expiry, name, number } = data;
     const expiryMembers = expiry.split("/");
     const expiryDate = new Date(`20${expiryMembers[1]}`, expiryMembers[0]);
     const paymentInfo = {
@@ -36,7 +46,7 @@ const CreditCard = (props) => {
         setUserData({ ...userData, paid: true });
       })
       .catch((err) => {
-        alert("Erro! Tente novamente!");
+        toast("Erro! Tente novamente!");
       });
   };
 
@@ -45,22 +55,23 @@ const CreditCard = (props) => {
       <form onSubmit={handleSubmit}>
         <div className="payment">
           <Cards
-            cvc={cvc}
-            expiry={expiry}
-            focused={focus}
-            name={name}
-            number={number}
+            cvc={data.cvc}
+            expiry={data.expiry}
+            focused={data.focus}
+            name={data.name}
+            number={data.number}
           />
           <div className="inputs">
             <input
               minlength="16"
               maxlength="16"
+              pattern="[0-9]{16}"
               required
               type="tel"
               name="number"
               placeholder="Card Number"
-              value={number}
-              onChange={(e) => setNumber(e.target.value)}
+              value={data.number}
+              onChange={(e) => handleChange(e, "number")}
               onFocus={handleInputFocus}
             />
             <input
@@ -68,8 +79,8 @@ const CreditCard = (props) => {
               type="text"
               name="name"
               placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={data.name}
+              onChange={(e) => handleChange(e, "name")}
               onFocus={handleInputFocus}
             />
             <div className="double">
@@ -81,19 +92,20 @@ const CreditCard = (props) => {
                 pattern="[0-3][0-9]/[0-9][0-9]"
                 name="expiry"
                 placeholder="Valid Thru"
-                value={expiry}
-                onChange={(e) => setExpiry(e.target.value)}
+                value={data.expiry}
+                onChange={(e) => handleChange(e, "expiry")}
                 onFocus={handleInputFocus}
               />
               <input
                 minlength="3"
                 maxlength="3"
+                pattern="[0-9]{3}"
                 required
-                type="number"
+                type="text"
                 name="cvc"
                 placeholder="CVC"
-                value={cvc}
-                onChange={(e) => setCvc(e.target.value)}
+                value={data.cvc}
+                onChange={(e) => handleChange(e, "cvc")}
                 onFocus={handleInputFocus}
               />
             </div>
