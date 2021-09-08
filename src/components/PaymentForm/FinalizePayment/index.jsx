@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import UserContext from "../../../contexts/UserContext";
 import CreditCard from "./CreditCard";
 import PaymentDone from "./PaymentDone";
-import { StyledPayment } from "./styles";
 
 const FinalizePayment = (props) => {
+  const { userData, setUserData } = useContext(UserContext);
+
   return (
     <div>
-      <CreditCard button={props.children} />
-      {/* <PaymentDone /> */}
+      {userData.paid ? <PaymentDone /> : <CreditCard button={props.children} />}
     </div>
   );
 };

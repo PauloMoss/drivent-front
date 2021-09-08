@@ -12,11 +12,12 @@ import Accommodation from "./Accommodation";
 import UserContext from "../../contexts/UserContext";
 
 export default function PaymentForm() {
-  const { userData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const { enrollment } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
-  const [hasReservation, setHasReservation] = useState(false);
+  const [hasReservation, setHasReservation] = useState(userData.hasReservation);
   const [selectedTicket, setSelectedTicket] = useState();
+  const [bookingId, setBookingId] = useState(userData.bookingId);
   const [selectedAccommodation, setSelectedAccommodation] = useState();
 
   useEffect(() => {
@@ -25,7 +26,6 @@ export default function PaymentForm() {
     }).catch((error) => {
       toast("Não foi possível");
     });
-    setHasReservation(true); // trigger pra pular a seleção de ingresso e ir pro resumo + cartão
   }, []);
 
   const isOnline = selectedTicket?.name === "Online";
@@ -50,13 +50,13 @@ export default function PaymentForm() {
               {
                 selectedTicket
                   ? isOnline
-                    ? <TotalTicketPrice selectedOrder={selectedOrder} />
+                    ? <TotalTicketPrice setBookingId={setBookingId} setHasReservation={setHasReservation} setUserData={setUserData} selectedOrder={selectedOrder} />
                     : <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation} />
                   : ""
               }
               {
                 selectedAccommodation ?
-                  <TotalTicketPrice selectedOrder={selectedOrder} />
+                  <TotalTicketPrice setBookingId={setBookingId} setHasReservation={setHasReservation} setUserData={setUserData} selectedOrder={selectedOrder} />
                   : ""
               }
             </>)

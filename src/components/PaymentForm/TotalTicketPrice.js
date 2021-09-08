@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
 
 import useApi from "../../hooks/useApi";
-import  SectionTitle  from "../Form/SectionTitle";
+import SectionTitle from "../Form/SectionTitle";
 import Button from "../Form/Button";
 import UserContext from "../../contexts/UserContext";
 import { toast } from "react-toastify";
 
-export default function TotalTicketPrice({ selectedOrder }) {
+export default function TotalTicketPrice({ selectedOrder, setUserData, setHasReservation, setBookingId }) {
   const { userData } = useContext(UserContext);
   const { booking } = useApi();
 
@@ -16,7 +16,7 @@ export default function TotalTicketPrice({ selectedOrder }) {
     userId: userData.user.id,
     ticketInfo: selectedOrder,
   };
-  
+
   const totalPrice = selectedOrder.price;
   const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
@@ -24,10 +24,14 @@ export default function TotalTicketPrice({ selectedOrder }) {
     setDisabled(true);
     booking
       .postBookingInfo(bookingInfo, config)
-      .then(() => {
+      .then((res) => {
+        setBookingId(res.data.id);
+        setHasReservation(true);
+        setUserData({ ...userData, hasReservation: true, bookingId: res.data.id });
         setDisabled(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(err);
         setDisabled(false);
         toast("Não foi possível fazer a reserva, tente novamente");
       });

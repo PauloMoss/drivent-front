@@ -3,12 +3,11 @@ import styled from "styled-components";
 export function OverviewBox({ ticket }) {
   const { type, hasHotel, price } = ticket;
 
-  console.log(ticket);
   return (<Container>
-    <Description>{type} + {hasHotel?"Com Hotel":"Sem Hotel"}</Description>
+    <Description>{type} + {hasHotel ? "Com Hotel" : "Sem Hotel"}</Description>
     <Price>R$ {price}</Price>
   </Container>);
-} 
+}
 
 const Container = styled.div`
   width: 290px;

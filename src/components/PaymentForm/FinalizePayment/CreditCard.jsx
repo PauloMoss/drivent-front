@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
+import UserContext from "../../../contexts/UserContext";
+import useApi from "../../../hooks/useApi";
 import { StyledCreditCard } from "./styles";
 
 const CreditCard = (props) => {
@@ -9,6 +11,8 @@ const CreditCard = (props) => {
   const [focus, setFocus] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+  const { booking } = useApi();
+  const { userData, setUserData } = useContext(UserContext);
 
   const handleInputFocus = (e) => {
     setFocus(e.target.name);
@@ -16,6 +20,24 @@ const CreditCard = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+    const expiryMembers = expiry.split("/");
+    const expiryDate = new Date(`20${expiryMembers[1]}`, expiryMembers[0]);
+    const paymentInfo = {
+      cvc,
+      expiry: expiryDate.getTime(),
+      name,
+      cardNumber: number,
+    };
+
+    booking
+      .payBooking(userData.bookingId, paymentInfo, config)
+      .then((res) => {
+        setUserData({ ...userData, paid: true });
+      })
+      .catch((err) => {
+        alert("Erro! Tente novamente!");
+      });
   };
 
   return (
