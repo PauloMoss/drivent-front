@@ -1,8 +1,8 @@
-import useApi from "../../hooks/useApi";
+import useApi from "../../../hooks/useApi";
 
-import TicketOptions from "./TicketOptions";
+import TicketOptions from "../TicketOptions";
 
-export default function Tickets({ selectedTicket, setSelectedTicket }) {
+export default function Modality({ selectedTicket, setSelectedTicket }) {
   const { ticket } = useApi();
 
   const title = "Primeiro, escolha sua modalidade de ingresso";
