@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 import { toast } from "react-toastify";
@@ -7,7 +7,7 @@ import useApi from "../../hooks/useApi";
 
 import { DashWarning } from "../Dashboard/DashWarning";
 import Ticket from "./TicketModality/Ticket";
-import Payment from "./Payment/Payment";
+import FinalizePayment from "./FinalizePayment";
 import Overview from "./ReservationOverview/Overview";
 
 export default function PaymentForm() {
@@ -15,11 +15,11 @@ export default function PaymentForm() {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [bookDetails, setBookDetails] = useState(null);
   const [isPaid, setIsPaid] = useState(false);
-  
+
   useEffect(() => {
     enrollment.getPersonalInformations()
       .then((response) => {
-        if(response.status === 200) {
+        if (response.status === 200) {
           setIsEnrolled(true);
         };
       })
@@ -29,10 +29,10 @@ export default function PaymentForm() {
   }, []);
 
   useEffect(() => {
-    if(isEnrolled) {
+    if (isEnrolled) {
       booking.getBookingInfo()
         .then((response) => {
-          if(response.status === 200) {
+          if (response.status === 200) {
             const booked = response.data;
             setBookDetails(booked);
             setIsPaid(booked.isPaid);
@@ -48,10 +48,10 @@ export default function PaymentForm() {
     return (
       <>
         {
-          bookDetails  
+          bookDetails
             ? isPaid
               ? <Overview />
-              : <Payment />
+              : <FinalizePayment />
             : <Ticket />
         }
       </>
@@ -62,10 +62,10 @@ export default function PaymentForm() {
     <>
       <StyledTypography variant="h4" color="initial">Ingresso e pagamento</StyledTypography>
       {
-        isEnrolled ? 
+        isEnrolled ?
           <RenderProperPaymentStatus />
           : <DashWarning variant="h6">
-              Você precisa completar sua inscrição antes<br/> de prosseguir pra escolha de ingresso
+            Você precisa completar sua inscrição antes<br /> de prosseguir pra escolha de ingresso
           </DashWarning>
       }
     </>
