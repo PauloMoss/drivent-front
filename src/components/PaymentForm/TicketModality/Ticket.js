@@ -10,33 +10,32 @@ export default function Ticket() {
 
   const isOnline = selectedTicket?.name === "Online";
   let selectedOrder = {};
-  
-  if(isOnline)
-  {
+
+  if (isOnline) {
     selectedOrder = { isOnline: true, hasHotel: false, price: selectedTicket.price };
     selectedAccommodation && setSelectedAccommodation(null);
-  } else if(selectedAccommodation) {
+  } else if (selectedAccommodation) {
     selectedOrder.isOnline = false;
     selectedOrder.hasHotel = selectedAccommodation.isRequested;
     selectedOrder.price = selectedTicket.price + selectedAccommodation.price;
   }
 
-  return(
+  return (
     <>
       <Modality setSelectedTicket={setSelectedTicket} selectedTicket={selectedTicket} />
       {
-        selectedTicket 
+        selectedTicket
           ? isOnline
-            ? <TotalTicketPrice selectedOrder={selectedOrder}/>
-            : <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation}/>
+            ? <TotalTicketPrice selectedOrder={selectedOrder} />
+            : <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation} />
           : ""
       }
       {
         selectedAccommodation ?
-          <TotalTicketPrice selectedOrder={selectedOrder}/>
+          <TotalTicketPrice selectedOrder={selectedOrder} />
           : ""
       }
-    
+
     </>
   );
 };
