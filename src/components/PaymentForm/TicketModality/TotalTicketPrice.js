@@ -25,12 +25,10 @@ export default function TotalTicketPrice({ selectedOrder }) {
     booking
       .postBookingInfo(bookingInfo, config)
       .then((res) => {
-        s
         setUserData({ ...userData, hasReservation: true, bookingId: res.data.id });
         setDisabled(false);
       })
       .catch((err) => {
-        console.error(err);
         setDisabled(false);
         toast("Não foi possível fazer a reserva, tente novamente");
       });
