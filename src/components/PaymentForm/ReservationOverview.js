@@ -11,16 +11,18 @@ import FinalizePayment from "./FinalizePayment";
 export default function ReservationOverview() {
   const [ticket, setTicket] = useState();
   const [isCardValid, setIsCardValid] = useState(false);
-  //   const { reservation } = useApi();
+  const { booking } = useApi();
 
   useEffect(() => {
-    // ticket.getTicketsInfo().then(response => {
-    //   if (response.status !== 200) {
-    //     return;
-    //   }
-    //   setTickets(response.data);
-    // });
-    setTicket({ type: "Presencial", hasHotel: true, price: 600 });
+    booking.getBookingInfo().then(response => {
+      const { hasHotel, price, isOnline } = response.data;
+
+      setTicket({
+        type: isOnline ? "Online" : "Presencial",
+        hasHotel,
+        price
+      });
+    });
   }, []);
 
   return (

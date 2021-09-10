@@ -7,14 +7,14 @@ import useApi from "../../hooks/useApi";
 
 import { DashWarning } from "../Dashboard/DashWarning";
 import Ticket from "./TicketModality/Ticket";
-import FinalizePayment from "./FinalizePayment";
-import Overview from "./ReservationOverview/Overview";
+import ReservationOverview from "./ReservationOverview";
+import UserContext from "../../contexts/UserContext";
 
 export default function PaymentForm() {
   const { enrollment, booking } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [bookDetails, setBookDetails] = useState(null);
-  const [isPaid, setIsPaid] = useState(false);
+  const { userData } = useContext(UserContext);
 
   useEffect(() => {
     enrollment.getPersonalInformations()
@@ -35,7 +35,6 @@ export default function PaymentForm() {
           if (response.status === 200) {
             const booked = response.data;
             setBookDetails(booked);
-            setIsPaid(booked.isPaid);
           };
         })
         .catch(() => {
@@ -48,10 +47,8 @@ export default function PaymentForm() {
     return (
       <>
         {
-          bookDetails
-            ? isPaid
-              ? <Overview />
-              : <FinalizePayment />
+          userData.hasReservation
+            ? <ReservationOverview />
             : <Ticket />
         }
       </>
