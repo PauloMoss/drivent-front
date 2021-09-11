@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 import { toast } from "react-toastify";
@@ -7,14 +7,13 @@ import useApi from "../../hooks/useApi";
 
 import { DashWarning } from "../Dashboard/DashWarning";
 import Ticket from "./TicketModality/Ticket";
-import FinalizePayment from "./FinalizePayment";
-import Overview from "./ReservationOverview/Overview";
+import ReservationOverview from "./ReservationOverview";
+import UserContext from "../../contexts/UserContext";
 
 export default function PaymentForm() {
-  const { enrollment, booking } = useApi();
+  const { enrollment } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
-  const [bookDetails, setBookDetails] = useState(null);
-  const [isPaid, setIsPaid] = useState(false);
+  const { userData } = useContext(UserContext);
 
   useEffect(() => {
     enrollment.getPersonalInformations()
@@ -28,30 +27,12 @@ export default function PaymentForm() {
       });
   }, []);
 
-  useEffect(() => {
-    if (isEnrolled) {
-      booking.getBookingInfo()
-        .then((response) => {
-          if (response.status === 200) {
-            const booked = response.data;
-            setBookDetails(booked);
-            setIsPaid(booked.isPaid);
-          };
-        })
-        .catch(() => {
-          toast("Não foi possível encontrar sua reserva");
-        });
-    }
-  }, [isEnrolled]);
-
   function RenderProperPaymentStatus() {
     return (
       <>
         {
-          bookDetails
-            ? isPaid
-              ? <Overview />
-              : <FinalizePayment />
+          userData.hasReservation
+            ? <ReservationOverview />
             : <Ticket />
         }
       </>

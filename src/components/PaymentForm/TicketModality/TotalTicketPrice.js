@@ -1,30 +1,33 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import useApi from "../../../hooks/useApi";
-import  SectionTitle  from "../../Form/SectionTitle";
+import SectionTitle from "../../Form/SectionTitle";
 import Button from "../../Form/Button";
+import UserContext from "../../../contexts/UserContext";
 import { toast } from "react-toastify";
 
 export default function TotalTicketPrice({ selectedOrder }) {
+  const { userData, setUserData } = useContext(UserContext);
   const { booking } = useApi();
 
   const [disabled, setDisabled] = useState(false);
 
   const bookingInfo = {
-    ...selectedOrder 
+    ...selectedOrder
   };
 
   const totalPrice = selectedOrder.price;
 
   function sendBookingInfo() {
     setDisabled(true);
-    
+
     booking
       .postBookingInfo(bookingInfo)
-      .then(() => {
+      .then((res) => {
+        setUserData({ ...userData, hasReservation: true, bookingId: res.data.id });
         setDisabled(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setDisabled(false);
         toast("Não foi possível fazer a reserva, tente novamente");
       });

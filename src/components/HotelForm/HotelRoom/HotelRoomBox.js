@@ -8,7 +8,7 @@ export default function HotelRoomBox({ room }) {
       <RoomNumber>{number}</RoomNumber>
       <RoomVacancy>
         {
-          vacancies.map(v => {
+          vacancies?.map(v => {
             return(
               v.isFilled 
                 ? <IoPersonSharp key={v.id}/>
