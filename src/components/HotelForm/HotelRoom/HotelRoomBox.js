@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { IoPersonOutline, IoPersonSharp } from "react-icons/io5";
 
 export default function HotelRoomBox({ room }) {
-  const { number, isAvailable, vacancy } = room;
+  const { number, isAvailable, vacancies } = room;
   return(
     <Container isAvailable={isAvailable}>
       <RoomNumber>{number}</RoomNumber>
       <RoomVacancy>
         {
-          vacancy.map(v => {
+          vacancies.map(v => {
             return(
               v.isFilled 
                 ? <IoPersonSharp key={v.id}/>

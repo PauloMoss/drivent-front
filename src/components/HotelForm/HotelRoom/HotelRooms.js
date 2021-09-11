@@ -1,34 +1,34 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
+import useApi from "../../../hooks/useApi";
 import SectionTitle from "../../Form/SectionTitle";
 import HotelRoomBox from "./HotelRoomBox";
 
 export default function HotelRooms() {
-  const roomQuantity = [];
-  const quantityNumber = 16;
+  const { hotel } = useApi();
+  const [hotelRooms, setHotelRooms] = useState(null);
+  const hotelId = 1;
 
-  const room = {
-    id: null,
-    number: 101,
-    isAvailable: false,
-    vacancy: [
-      { id: 1, isFilled: true },
-      { id: 2, isFilled: false },
-      { id: 3, isFilled: false }
-    ]
-  };
-
-  for(let i = 0; i < quantityNumber; i++) {
-    room.id = i;
-    roomQuantity.push(room);
-  }
+  useEffect(() => {
+    hotel.getHotelRooms(hotelId)
+      .then(response => {
+        if(response.status === 200) {
+          setHotelRooms(response.data);
+        };
+      })
+      .catch(() => {
+        toast("Não foi possível encontrar os quartos desse hotel");
+      });
+  }, []);
 
   return(
     <>
       <SectionTitle>Ótima pedida! Agora escolha seu quarto:</SectionTitle>
       <RoomsContainer>
         {
-          roomQuantity.map((rq) => {
+          hotelRooms?.map((rq) => {
             return <HotelRoomBox key={rq.id} room={rq} />;
           })
         }
