@@ -9,6 +9,7 @@ import HotelRoomBox from "./HotelRoomBox";
 export default function HotelRooms() {
   const { hotel } = useApi();
   const [hotelRooms, setHotelRooms] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState(null);
   const hotelId = 1;
 
   useEffect(() => {
@@ -29,7 +30,13 @@ export default function HotelRooms() {
       <RoomsContainer>
         {
           hotelRooms?.map((rq) => {
-            return <HotelRoomBox key={rq.id} room={rq} />;
+            return (
+              <HotelRoomBox 
+                key={rq.id} 
+                room={rq} 
+                setSelectedRoom={setSelectedRoom} 
+                selectedRoom={selectedRoom}/>
+            );
           })
         }
       </RoomsContainer>
