@@ -14,7 +14,7 @@ export default function PaymentForm() {
   const { enrollment } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
   const { userData } = useContext(UserContext);
-
+  
   useEffect(() => {
     enrollment.getPersonalInformations()
       .then((response) => {
