@@ -10,7 +10,7 @@ import FinalizePayment from "./FinalizePayment";
 
 export default function ReservationOverview() {
   const [ticket, setTicket] = useState();
-  const [isCardValid, setIsCardValid] = useState(false);
+  const [ isCardValid ] = useState(false);
   const { booking } = useApi();
 
   useEffect(() => {

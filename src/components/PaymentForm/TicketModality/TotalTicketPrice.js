@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 
 export default function TotalTicketPrice({ selectedOrder }) {
   const { userData, setUserData } = useContext(UserContext);
-  const config = { headers: { Authorization: `Bearer ${userData.token}` } };
   const { booking } = useApi();
 
   const [disabled, setDisabled] = useState(false);
@@ -23,12 +22,12 @@ export default function TotalTicketPrice({ selectedOrder }) {
     setDisabled(true);
 
     booking
-      .postBookingInfo(bookingInfo, config)
+      .postBookingInfo(bookingInfo)
       .then((res) => {
         setUserData({ ...userData, hasReservation: true, bookingId: res.data.id });
         setDisabled(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setDisabled(false);
         toast("Não foi possível fazer a reserva, tente novamente");
       });

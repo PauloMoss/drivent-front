@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
 import { DashWarning } from "../Dashboard/DashWarning";
+import HotelRoom from "./HotelRoom/HotelRooms";
 
 export default function HotelForm() {
   const { booking } = useApi();
@@ -27,14 +28,14 @@ export default function HotelForm() {
 
   return (
     <>
-      <StyledTypography variant="h4" color="initial">Ingresso e pagamento</StyledTypography>
+      <StyledTypography variant="h4" color="initial">Escolha de hotel e quarto</StyledTypography>
       {
         isPaid
           ? isOnline
             ? <DashWarning variant="h6">
               Sua modalidade de ingresso não inclui hospedagem <br/> Prossiga para a escolha de atividades
             </DashWarning>
-            : "Em breve!"
+            : <HotelRoom />
           : <DashWarning variant="h6">
               Você precisa ter confirmado pagamento antes <br/> de fazer a escolha de hospedagem
           </DashWarning>

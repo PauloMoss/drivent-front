@@ -4,7 +4,7 @@ import CreditCard from "./CreditCard";
 import PaymentDone from "./PaymentDone";
 
 const FinalizePayment = (props) => {
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
 
   return (
     <div>

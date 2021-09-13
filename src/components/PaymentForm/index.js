@@ -11,9 +11,8 @@ import ReservationOverview from "./ReservationOverview";
 import UserContext from "../../contexts/UserContext";
 
 export default function PaymentForm() {
-  const { enrollment, booking } = useApi();
+  const { enrollment } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
-  const [bookDetails, setBookDetails] = useState(null);
   const { userData } = useContext(UserContext);
 
   useEffect(() => {
@@ -27,21 +26,6 @@ export default function PaymentForm() {
         toast("Não foi possível encontrar sua inscrição");
       });
   }, []);
-
-  useEffect(() => {
-    if (isEnrolled) {
-      booking.getBookingInfo()
-        .then((response) => {
-          if (response.status === 200) {
-            const booked = response.data;
-            setBookDetails(booked);
-          };
-        })
-        .catch(() => {
-          toast("Não foi possível encontrar sua reserva");
-        });
-    }
-  }, [isEnrolled]);
 
   function RenderProperPaymentStatus() {
     return (
