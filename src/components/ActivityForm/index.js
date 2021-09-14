@@ -10,29 +10,29 @@ import UserContext from "../../contexts/UserContext";
 
 export default function ActivityForm() {
   const { booking } = useApi();
+  const [isPaid, setIsPaid] = useState(false);
   const [isOnline, setIsOnline] = useState(null);
   const { userData } = useContext(UserContext);
   
   useEffect(() => {
-    if(userData.bookingId) {
-      booking.getBookingInfo()
-        .then(response => {
-          if(response.status === 200) {
-            const bookDetails = response.data;
-            setIsOnline(bookDetails.isOnline);
-          };
-        })
-        .catch(() => {
-          toast("Não foi possível encontrar sua reserva");
-        });
-    }
+    booking.getBookingInfo()
+      .then(response => {
+        if(response.status === 200) {
+          const bookDetails = response.data;
+          setIsOnline(bookDetails.isOnline);
+          setIsPaid(bookDetails.isPaid);
+        };
+      })
+      .catch(() => {
+        toast("Não foi possível encontrar sua reserva");
+      });
   }, []);
 
   return (
     <>
       <StyledTypography variant="h4" color="initial">Escolha de atividades</StyledTypography>
       {
-        userData.paid
+        isPaid
           ? isOnline
             ? <DashWarning variant="h6">
               Sua modalidade de ingresso não necessita escolher <br/> atividade. Você terá acesso a todas as atividades.
