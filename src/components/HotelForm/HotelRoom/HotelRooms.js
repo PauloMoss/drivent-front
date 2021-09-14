@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 import useApi from "../../../hooks/useApi";
 import SectionTitle from "../../Form/SectionTitle";
+import BookingRoom from "../BookingRoom";
 import HotelRoomBox from "./HotelRoomBox";
 
 export default function HotelRooms() {
@@ -24,6 +25,13 @@ export default function HotelRooms() {
       });
   }, []);
 
+  let selectedOrder = {};
+
+  if(selectedRoom) {
+    const { roomId, vacancyId } = selectedRoom;
+    selectedOrder = { hotelId, roomId, vacancyId };
+  }
+
   return(
     <>
       <SectionTitle>Ótima pedida! Agora escolha seu quarto:</SectionTitle>
@@ -40,6 +48,7 @@ export default function HotelRooms() {
           })
         }
       </RoomsContainer>
+      <BookingRoom selectedOrder={selectedOrder}/>
       
     </>
   );

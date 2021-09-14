@@ -5,7 +5,7 @@ export default function HotelRoomBox({ room, setSelectedRoom, selectedRoom }) {
   const { id, number, isAvailable, vacancies } = room;
 
   return(
-    <Container isAvailable={isAvailable} isSelected={selectedRoom?.room === id}>
+    <Container isAvailable={isAvailable} isSelected={selectedRoom?.roomId === id}>
       <RoomNumber>{number}</RoomNumber>
       <RoomVacancy>
         {
@@ -16,7 +16,7 @@ export default function HotelRoomBox({ room, setSelectedRoom, selectedRoom }) {
                   key={v.id} 
                   isAvailable={isAvailable}
                 />
-                : selectedRoom?.vacancy === v.id 
+                : selectedRoom?.vacancyId === v.id 
                   ? <Selected 
                     key={v.id} 
                     onClick={() => setSelectedRoom(null)}
@@ -24,7 +24,7 @@ export default function HotelRoomBox({ room, setSelectedRoom, selectedRoom }) {
                   : <Unfilled 
                     key={v.id} 
                     isAvailable={isAvailable} 
-                    onClick={() => setSelectedRoom({ room: room.id, vacancy: v.id })}
+                    onClick={() => setSelectedRoom({ roomId: room.id, vacancyId: v.id })}
                   />
             );
           })
@@ -45,6 +45,7 @@ const Container = styled.div`
   border-radius: 10px;
   padding: 0 16px;
   margin-top: 10px;
+  margin-bottom: 45px;
 
   background-color: ${props => (
     props.isAvailable ? 
