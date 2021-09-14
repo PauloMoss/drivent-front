@@ -31,4 +31,5 @@ const Button = styled(MuiButton)`
   margin-top: 8px !important;
   margin-right: 17px !important;
   background-color: ${props => props.selected === true ? "#FFD37D" : "E0E0E0"} !important;
+  text-transform: none !important;
 `;
