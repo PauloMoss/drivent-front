@@ -10,6 +10,8 @@ import Dates from "./ActivitiesOptions/Dates";
 
 export default function ActivityForm() {
   const { booking } = useApi();
+  const { activitie } = useApi();
+  const [activities, setActitivites] = useState();
   const [isPaid, setIsPaid] = useState(false);
   const [isOnline, setIsOnline] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
@@ -26,6 +28,16 @@ export default function ActivityForm() {
       .catch(() => {
         toast("Não foi possível encontrar sua reserva");
       });
+
+    activitie.getActivities()
+      .then(response => {
+        if(response.status === 200) {
+          setActitivites(response.data);
+        };
+      })
+      .catch(() => {
+        toast("Não foi possível encontrar as atividades");
+      });
   }, []);
 
   return (
@@ -37,7 +49,7 @@ export default function ActivityForm() {
             ? <DashWarning variant="h6">
               Sua modalidade de ingresso não necessita escolher <br/> atividade. Você terá acesso a todas as atividades.
             </DashWarning>
-            : <Dates selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
+            : <Dates selectedDay={selectedDay} setSelectedDay={setSelectedDay} activities={activities} />
           : <DashWarning variant="h6">
               Você precisa ter confirmado pagamento antes <br/> de fazer a escolha de atividades
           </DashWarning>

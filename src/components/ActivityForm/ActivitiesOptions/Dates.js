@@ -3,24 +3,22 @@ import MuiButton from "@material-ui/core/Button";
 
 import SectionTitle from "../../Form/SectionTitle";
 
-export default function Dates({ selectedDay, setSelectedDay }) {
-  const eventDays = [
-    { id: 1, week: "Sexta", month: "22/10" },
-    { id: 2, week: "Sábado", month: "23/10" },
-    { id: 3, week: "Domingo", month: "24/10" }
-  ];
+export default function Dates({ selectedDay, setSelectedDay, activities }) {
+  const mappedEventDays = activities?.map(activitie => activitie.date);
+  
+  const eventDays = mappedEventDays?.filter((day, i) => mappedEventDays.indexOf(day) === i);
 
   return (
     <>
       <SectionTitle>Primeiro, filtre pelo dia do evento:</SectionTitle>
-      {eventDays?.map(day => (
+      {eventDays?.map((day, i) => (
         <Button
           variant="contained"
-          key={day.id}
-          onClick={() => setSelectedDay(day.id)}
-          selected={selectedDay === day.id ? true : false}
+          key={i}
+          onClick={() => setSelectedDay(i)}
+          selected={selectedDay === i ? true : false}
         >
-          {day.week}, {day.month}
+          {day}
         </Button>
       ))}
     </>
