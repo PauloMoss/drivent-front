@@ -9,4 +9,12 @@ export default class HotelApi extends AuthenticatedApi {
       }
     });
   }
+
+  getHotels() {
+    return api.get("/hotel", {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  }
 };

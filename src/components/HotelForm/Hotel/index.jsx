@@ -1,64 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import useApi from "../../../hooks/useApi";
 import SectionTitle from "../../Form/SectionTitle";
 import HotelRoom from "../HotelRoom/HotelRooms";
 import HotelCard from "./HotelCard";
 import { StyledHotels } from "./styles";
 
 const Hotel = () => {
-  const [hotel, setHotel] = useState();
   const [selected, setSelected] = useState();
-  const [hotels, setHotels] = useState([
-    {
-      pictureURL:
-        "https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg",
-      name: "Driven Resort",
-      accomodations: "Single e Double",
-      vacancies: 103,
-    },
-    {
-      pictureURL:
-        "https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg",
-      name: "Driven Resort",
-      accomodations: "Single e Double",
-      vacancies: 103,
-    },
-    {
-      pictureURL:
-        "https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg",
-      name: "Driven Resort",
-      accomodations: "Single e Double",
-      vacancies: 103,
-    },
-    {
-      pictureURL:
-        "https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg",
-      name: "Driven Resort",
-      accomodations: "Single e Double",
-      vacancies: 103,
-    },
-    {
-      pictureURL:
-        "https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg",
-      name: "Driven Resort",
-      accomodations: "Single e Double",
-      vacancies: 103,
-    },
-  ]);
+  const [hotels, setHotels] = useState([]);
+  const { hotel } = useApi();
+
+  useEffect(() => {
+    hotel
+      .getHotels()
+      .then((res) => {
+        setHotels(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        toast("Erro! Tente novamente!");
+      });
+  }, []);
 
   return (
     <>
       <SectionTitle>Primeiro, escolha seu hotel</SectionTitle>
       <StyledHotels>
-        {hotels.map((hotel, index) => (
+        {hotels.map((hotel) => (
           <HotelCard
-            selected={index === selected}
-            setSelected={() => setSelected(index)}
-            key={index}
-            setHotel={() => setHotel(index)}
-            pictureURL={hotel.pictureURL}
+            selected={hotel.id === selected}
+            setSelected={() => setSelected(hotel.id)}
+            key={hotel.id}
+            pictureURL="https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg"
             name={hotel.name}
-            accomodations={hotel.accomodations}
-            vacancies={hotel.vacancies}
+            accomodationsName={hotel.accomodationsName}
+            availableVacancies={hotel.availableVacancies}
           />
         ))}
       </StyledHotels>
