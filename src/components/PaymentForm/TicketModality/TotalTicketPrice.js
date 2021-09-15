@@ -24,7 +24,8 @@ export default function TotalTicketPrice({ selectedOrder }) {
     booking
       .postBookingInfo(bookingInfo)
       .then((res) => {
-        setUserData({ ...userData, hasReservation: true, bookingId: res.data.id });
+        const { id, roomId } = res.data;
+        setUserData({ ...userData, hasReservation: true, booking: { id, roomId } });
         setDisabled(false);
       })
       .catch(() => {

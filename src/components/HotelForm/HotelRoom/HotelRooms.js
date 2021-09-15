@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 
 import useApi from "../../../hooks/useApi";
 import SectionTitle from "../../Form/SectionTitle";
+import BookingRoom from "../BookingRoom";
 import HotelRoomBox from "./HotelRoomBox";
 
 export default function HotelRooms() {
@@ -40,6 +41,7 @@ export default function HotelRooms() {
           })
         }
       </RoomsContainer>
+      <BookingRoom selectedRoom={selectedRoom}/>
       
     </>
   );

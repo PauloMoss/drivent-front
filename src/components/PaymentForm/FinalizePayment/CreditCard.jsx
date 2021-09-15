@@ -41,7 +41,7 @@ const CreditCard = (props) => {
     };
 
     booking
-      .payBooking(userData.bookingId, paymentInfo, config)
+      .payBooking(userData.booking.id, paymentInfo, config)
       .then((res) => {
         setUserData({ ...userData, paid: true });
       })
