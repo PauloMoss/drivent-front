@@ -25,13 +25,6 @@ export default function HotelRooms() {
       });
   }, []);
 
-  let selectedOrder = {};
-
-  if(selectedRoom) {
-    const { roomId, vacancyId } = selectedRoom;
-    selectedOrder = { hotelId, roomId, vacancyId };
-  }
-
   return(
     <>
       <SectionTitle>Ótima pedida! Agora escolha seu quarto:</SectionTitle>
@@ -48,7 +41,7 @@ export default function HotelRooms() {
           })
         }
       </RoomsContainer>
-      <BookingRoom selectedOrder={selectedOrder}/>
+      <BookingRoom selectedRoom={selectedRoom}/>
       
     </>
   );

@@ -5,24 +5,19 @@ import Button from "../Form/Button";
 import UserContext from "../../contexts/UserContext";
 import { toast } from "react-toastify";
 
-export default function BookingRoom({ selectedOrder }) {
+export default function BookingRoom({ selectedRoom }) {
   const { userData, setUserData } = useContext(UserContext);
-  const { hotel } = useApi();
+  const { booking } = useApi();
 
   const [disabled, setDisabled] = useState(false);
-
-  const bookingRoomInfo = {
-    ...selectedOrder
-  };
-
   function sendRoomInfo() {
     setDisabled(true);
 
-    hotel
-      .postBookingRoomInfo(bookingRoomInfo)
+    booking
+      .postBookingRoom({ roomId: selectedRoom.roomId })
       .then((res) => {
-        const bookingHotel = { hotelId: res.data.hotelId, roomId: res.data.roomId, vacancyId: res.data.vacancyId };
-        setUserData({ ...userData, bookingHotel });
+        const { id, roomId } = res.data;
+        setUserData({ ...userData, booking: { id, roomId } });
         setDisabled(false);
       })
       .catch(() => {
