@@ -5,17 +5,17 @@ import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
 import { DashWarning } from "../Dashboard/DashWarning";
-import HotelRoom from "./HotelRoom/HotelRooms";
+import Hotel from "./Hotel";
 
 export default function HotelForm() {
   const { booking } = useApi();
   const [isPaid, setIsPaid] = useState(false);
   const [isOnline, setIsOnline] = useState(null);
-  
+
   useEffect(() => {
     booking.getBookingInfo()
       .then(response => {
-        if(response.status === 200) {
+        if (response.status === 200) {
           const bookDetails = response.data;
           setIsPaid(bookDetails.isPaid);
           setIsOnline(bookDetails.isOnline);
@@ -33,11 +33,11 @@ export default function HotelForm() {
         isPaid
           ? isOnline
             ? <DashWarning variant="h6">
-              Sua modalidade de ingresso não inclui hospedagem <br/> Prossiga para a escolha de atividades
+              Sua modalidade de ingresso não inclui hospedagem <br /> Prossiga para a escolha de atividades
             </DashWarning>
-            : <HotelRoom />
+            : <Hotel />
           : <DashWarning variant="h6">
-              Você precisa ter confirmado pagamento antes <br/> de fazer a escolha de hospedagem
+            Você precisa ter confirmado pagamento antes <br /> de fazer a escolha de hospedagem
           </DashWarning>
       }
     </>
