@@ -11,7 +11,7 @@ import UserContext from "../../contexts/UserContext";
 
 export default function HotelForm() {
   const { booking } = useApi();
-  const { userData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const [isOnline, setIsOnline] = useState(null);
   
   useEffect(() => {
@@ -19,6 +19,7 @@ export default function HotelForm() {
       .then(response => {
         if(response.status === 200) {
           const bookDetails = response.data;
+          setUserData({ ...userData, booking: { id: bookDetails.id, roomId: bookDetails.roomId } });
           setIsOnline(bookDetails.isOnline);
         };
       })
