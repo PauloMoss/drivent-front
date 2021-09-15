@@ -8,7 +8,7 @@ import { OverviewBox } from "./OverviewBox";
 import Button from "../Form/Button";
 import FinalizePayment from "./FinalizePayment";
 
-export default function ReservationOverview() {
+export default function ReservationOverview({ isPaid }) {
   const [ticket, setTicket] = useState();
   const [ isCardValid ] = useState(false);
   const { booking } = useApi();
@@ -30,7 +30,7 @@ export default function ReservationOverview() {
       <StyledTypography variant="h6">Ingresso escolhido</StyledTypography>
       {ticket ? <OverviewBox ticket={ticket} /> : null}
       <StyledTypography variant="h6">Pagamento</StyledTypography>
-      <FinalizePayment>
+      <FinalizePayment isPaid={isPaid}>
         <Button type="submit" disabled={!!isCardValid}>
           FINALIZAR PAGAMENTO
         </Button>
