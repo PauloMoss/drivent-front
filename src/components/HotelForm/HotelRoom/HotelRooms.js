@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
@@ -8,22 +8,22 @@ import BookingRoom from "../BookingRoom";
 import HotelRoomBox from "./HotelRoomBox";
 
 export default function HotelRooms() {
-  const { hotel } = useApi();
+  const { rooms } = useApi();
   const [hotelRooms, setHotelRooms] = useState(null);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const hotelId = 1;
 
-  useEffect(() => {
-    hotel.getHotelRooms(hotelId)
-      .then(response => {
-        if(response.status === 200) {
-          setHotelRooms(response.data);
-        };
-      })
-      .catch(() => {
-        toast("Não foi possível encontrar os quartos desse hotel");
-      });
-  }, []);
+  rooms.getHotelRooms(hotelId, setHotelRooms);
+  selectedRoom && verifyChoosenVacancyRealTimeStatus(hotelRooms);
+
+  function verifyChoosenVacancyRealTimeStatus(rooms) {
+    const choosenRoom = rooms.find(r => r.id === selectedRoom.roomId);
+    const choosenVacancy = choosenRoom.vacancies.find(v => v.id === selectedRoom.vacancyId);
+    if(choosenVacancy.isFilled) {
+      setSelectedRoom(null);
+      toast("A vaga selecionada foi escolhida, por favor selecione outra");
+    };
+  }
 
   return(
     <>

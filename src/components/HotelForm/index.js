@@ -13,7 +13,7 @@ export default function HotelForm() {
   const { booking } = useApi();
   const { userData, setUserData } = useContext(UserContext);
   const [isOnline, setIsOnline] = useState(null);
-  
+  console.log(userData);
   useEffect(() => {
     booking.getBookingInfo()
       .then(response => {
