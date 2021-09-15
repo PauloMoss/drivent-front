@@ -5,12 +5,11 @@ import SectionTitle from "../../Form/SectionTitle";
 
 export default function Dates({ selectedDay, setSelectedDay, activities }) {
   const mappedEventDays = activities?.map(activitie => activitie.date);
-  
   const eventDays = mappedEventDays?.filter((day, i) => mappedEventDays.indexOf(day) === i);
 
   return (
-    <>
-      <SectionTitle>Primeiro, filtre pelo dia do evento:</SectionTitle>
+    <Container>
+      {selectedDay !== null?null:<SectionTitle>Primeiro, filtre pelo dia do evento:</SectionTitle>}
       {eventDays?.map((day, i) => (
         <Button
           variant="contained"
@@ -21,7 +20,7 @@ export default function Dates({ selectedDay, setSelectedDay, activities }) {
           {day}
         </Button>
       ))}
-    </>
+    </Container>
   );
 }
 
@@ -31,3 +30,7 @@ const Button = styled(MuiButton)`
   background-color: ${props => props.selected === true ? "#FFD37D" : "E0E0E0"} !important;
   text-transform: none !important;
 `;
+const Container = styled.div`
+  margin-bottom: 50px;
+`;
+
