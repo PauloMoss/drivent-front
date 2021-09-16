@@ -16,7 +16,6 @@ const Hotel = () => {
       .getHotels()
       .then((res) => {
         setHotels(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
         toast("Erro! Tente novamente!");
@@ -32,7 +31,7 @@ const Hotel = () => {
             selected={hotel.id === selected}
             setSelected={() => setSelected(hotel.id)}
             key={hotel.id}
-            pictureURL="https://media-cdn.tripadvisor.com/media/photo-s/16/1a/ea/54/hotel-presidente-4s.jpg"
+            pictureURL={hotel.img}
             name={hotel.name}
             accomodationsName={hotel.accomodationsName}
             availableVacancies={hotel.availableVacancies}
