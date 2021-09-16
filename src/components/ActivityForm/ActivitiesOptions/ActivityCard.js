@@ -9,13 +9,11 @@ import UserContext from "../../../contexts/UserContext";
 import useApi from "../../../hooks/useApi";
 
 export default function ActivityCard({ activityData }) {
-  console.log(activityData);
   const { startTime, endTime, name, vacancies, id } = activityData;
   const halfHours = halfHourCount(startTime, endTime);
   const [inMyActivities, setInMyActivities ] = useState(false);
   const { userData } = useContext(UserContext);
   const { activity } = useApi();
-  console.log(userData);
 
   function halfHourCount(start, end) {
     const before = parseInt(start.replace(":", ""));
@@ -32,15 +30,18 @@ export default function ActivityCard({ activityData }) {
       if(vacancies>0) {
         //add to activities
         const body = { userId: userData.user.id, activityId: id };
-        console.log(body);
         activity
           .enrollUser(body)
           .then((res) => {
             toast("Atividade adicionada!✅");
             setInMyActivities(true);
           })
-          .catch(() => {
-            toast("Não foi possível se cadastrar na atividade, tente novamente");
+          .catch((error) => {
+            if(error.response.data.message.includes("time")) {
+              toast("O usuário já está cadastrado em uma atividade no mesmo horário!");  
+            } else {
+              toast("Não foi possível se cadastrar na atividade, tente novamente");
+            }
           });
       } else{
         toast("Atividade lotada!");
