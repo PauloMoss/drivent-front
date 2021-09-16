@@ -1,11 +1,19 @@
 import api from "./api";
 
 export default class TicketApi {
-  getTicketsInfo() {
-    return api.get("/tickets");
+  getTicketsInfo(token) {
+    return api.get("/tickets", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
 
-  getAccommodationsInfo() {
-    return api.get("/tickets/accommodation");
+  getAccommodationsInfo(token) {
+    return api.get("/tickets/accommodation", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
   }
 }

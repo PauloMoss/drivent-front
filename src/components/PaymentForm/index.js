@@ -14,7 +14,7 @@ export default function PaymentForm() {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
   const [hasBooking, setHasBooking] = useState(false);
-  const { userData, setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
 
   useEffect(() => {
     enrollment.getPersonalInformations()
