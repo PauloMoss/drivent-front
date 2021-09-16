@@ -1,9 +1,9 @@
 
 export default class RoomApi {
   getHotelRooms(hotelId, token, setHotelRooms) {
-    const socket = new WebSocket(`ws://localhost:4000/updates?q=rooms/${hotelId}`);
+    const socket = new WebSocket(`${process.env.REACT_APP_WS_API_URL}/updates?q=rooms/${hotelId}`);
     socket.onopen = (e) => {
-      console.log("[open] Connection established");
+      console.log("Connection established");
       socket.send(JSON.stringify(token));
     };
 
