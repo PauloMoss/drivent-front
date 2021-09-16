@@ -3,13 +3,13 @@ import { IoMdExit } from "react-icons/io";
 import { CgCloseO } from "react-icons/cg";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { ButtonBase } from "@material-ui/core";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import UserContext from "../../../contexts/UserContext";
 import useApi from "../../../hooks/useApi";
 
 export default function ActivityCard({ activityData }) {
-  const { startTime, endTime, name, vacancies, id } = activityData;
+  const { startTime, endTime, name, vacancies, id, users } = activityData;
   const halfHours = halfHourCount(startTime, endTime);
   const [inMyActivities, setInMyActivities ] = useState(false);
   const { userData } = useContext(UserContext);
@@ -21,14 +21,26 @@ export default function ActivityCard({ activityData }) {
     return (after - before) / 50;
   }
 
+  useEffect(() => {
+    users.forEach(user => {
+      if(user.id === userData.user.id) setInMyActivities(true);
+    });
+  }, [users]);
+
   function handleClick() {
     if(inMyActivities) {
-      //remove from activities
-      toast("Atividade removida.");
-      setInMyActivities(false);
+      const body = { userId: userData.user.id, activityId: id };
+      activity
+        .disenrollUser(body)
+        .then((res) => {
+          toast("Atividade removida.");
+          setInMyActivities(false);
+        })
+        .catch(() => {
+          toast("Não foi possível se cadastrar na atividade, tente novamente");
+        });
     }else{
       if(vacancies>0) {
-        //add to activities
         const body = { userId: userData.user.id, activityId: id };
         activity
           .enrollUser(body)

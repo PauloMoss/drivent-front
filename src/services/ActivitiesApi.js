@@ -17,4 +17,12 @@ export default class ActivitiesApi extends AuthenticatedApi {
       }
     });
   }
+
+  disenrollUser(body) {
+    return api.post("/activities/remove", body, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  }
 };

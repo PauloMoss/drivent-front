@@ -39,9 +39,7 @@ export default function ActivityForm() {
       .catch(() => {
         toast("Não foi possível encontrar as atividades");
       });
-  }, []);
-
-  console.log(activities);
+  }, [selectedDay]);
 
   return (
     <>
