@@ -6,7 +6,7 @@ import Button from "../../Form/Button";
 import UserContext from "../../../contexts/UserContext";
 import { toast } from "react-toastify";
 
-export default function TotalTicketPrice({ selectedOrder }) {
+export default function TotalTicketPrice({ selectedOrder, setIsPaid }) {
   const { userData, setUserData } = useContext(UserContext);
   const { booking } = useApi();
 
@@ -27,6 +27,7 @@ export default function TotalTicketPrice({ selectedOrder }) {
         const { id, roomId } = res.data;
         setUserData({ ...userData, hasReservation: true, booking: { id, roomId } });
         setDisabled(false);
+        setIsPaid(true);
       })
       .catch(() => {
         setDisabled(false);

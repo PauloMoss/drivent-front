@@ -1,28 +1,59 @@
 import styled from "styled-components";
+import { IoMdExit } from "react-icons/io";
+import { CgCloseO } from "react-icons/cg";
+import { FaRegCheckCircle } from "react-icons/fa";
+import { ButtonBase } from "@material-ui/core";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ActivityCard({ activity }) {
   const { startTime, endTime, name, vacancies } = activity;
   const halfHours = halfHourCount(startTime, endTime);
+  const [inMyActivities, setInMyActivities ] = useState(false);
 
   function halfHourCount(start, end) {
     const before = parseInt(start.replace(":", ""));
     const after = parseInt(end.replace(":", ""));
     return (after - before) / 50;
   }
+
+  function handleClick() {
+    if(inMyActivities) {
+      //remove from activitis
+      toast("Atividade removida");
+      setInMyActivities(false);
+    }else{
+      if(vacancies>0) {
+        //remove from activitis
+        toast("Atividade adicionada");
+        setInMyActivities(true);
+      } else{
+        toast("Atividade lotada!");
+      }
+    }
+  }
   return (
-    <Card halfHours={halfHours}>
+    <Card halfHours={halfHours} className={inMyActivities?"enrolled":""}>
       <Information>
         <strong>{name}</strong>
         <p>{startTime} - {endTime}</p>
       </Information>
-      <AttendButton available={vacancies>0}>
-        {vacancies>0?
+      <Line/>
+      <AttendButton  className={vacancies>0 || inMyActivities?"available":"unavailable"} onClick={handleClick}>
+        {inMyActivities?
           <>
-            <p>vagas:</p> 
-            <p>{vacancies}</p>
+            <FaRegCheckCircle/>
+            <p>Inscrito</p>
           </>
-          :
-          <p>Esgotado</p>}
+          :vacancies>0?
+            <>
+              <IoMdExit/>
+              <p>{vacancies} vagas</p>
+            </>
+            :<>
+              <CgCloseO/>
+              <p>Esgotado</p>
+            </>}
       </AttendButton>
     </Card>
   );
@@ -32,11 +63,16 @@ const Card = styled.div`
   background: #F1F1F1;
   border-radius: 5px;
   margin: 10px 15px;
-  height: calc( ${props => props.halfHours} * 40px);
+  height: calc( ${props => props.halfHours} * 40px - ${props => props.halfHours>2?"0px":"5px"});
   box-sizing: border-box;
   display: flex;
   font-size: 12px;
   line-height: 14px;
+  position: relative;
+  &.enrolled{
+    color: #078632;
+    background-color: #d0ffdb;
+  }
 `;
 
 const Information = styled.div`
@@ -47,14 +83,35 @@ const Information = styled.div`
     margin: 6px 0px;
   }
 `;
+const Line = styled.div`
+  height: calc( 100% - 20px);
+  position: relative;
+  top: 10px;
+  width: 1px;
+  flex-shrink: 0;
+  background-color: #CFCFCF;
+  .enrolled > & {
+    background-color: #99E8A1;
+  }
+`;
 
-const AttendButton = styled.div`
-  width: 66px;
-  border-left: 1px solid #CFCFCF;
+const AttendButton = styled(ButtonBase)`
+&&{width: 66px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  cursor: ${props => props.available?"pointer":"disabled"};
-  color: ${props => props.available?"#078632":"#CC6666"};
+  &.available{
+    cursor: pointer;
+    color: #078632;
+  }
+  &.unavailable{
+    cursor: not-allowed;
+    color: #CC6666;
+  }
+  font-size: 9px;
+  line-height: 11px;
+  svg {
+    font-size: 20px;
+  }}
 `;

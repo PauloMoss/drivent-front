@@ -4,7 +4,7 @@ import Modality from "./Modality";
 import Accommodation from "./Accommodation";
 import TotalTicketPrice from "./TotalTicketPrice";
 
-export default function Ticket() {
+export default function Ticket({ setIsPaid }) {
   const [selectedTicket, setSelectedTicket] = useState();
   const [selectedAccommodation, setSelectedAccommodation] = useState();
 
@@ -26,13 +26,13 @@ export default function Ticket() {
       {
         selectedTicket
           ? isOnline
-            ? <TotalTicketPrice selectedOrder={selectedOrder} />
+            ? <TotalTicketPrice setIsPaid={setIsPaid} selectedOrder={selectedOrder} />
             : <Accommodation setSelectedAccommodation={setSelectedAccommodation} selectedAccommodation={selectedAccommodation} />
           : ""
       }
       {
         selectedAccommodation ?
-          <TotalTicketPrice selectedOrder={selectedOrder} />
+          <TotalTicketPrice setIsPaid={setIsPaid} selectedOrder={selectedOrder} />
           : ""
       }
 

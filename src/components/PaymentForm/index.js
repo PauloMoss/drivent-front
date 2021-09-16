@@ -10,27 +10,15 @@ import Ticket from "./TicketModality/Ticket";
 import ReservationOverview from "./ReservationOverview";
 
 export default function PaymentForm() {
-  const { booking } = useApi();
+  const { booking, enrollment } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
   
   useEffect(() => {
+    enrollment.getPersonalInformations()
+      .then(res => {if (res.status === 200) setIsEnrolled(true);});
     booking.getBookingInfo()
-      .then((response) => {
-        if (response.status === 200) {
-          const bookDetails = response.data;
-          if (bookDetails.isOnline) {
-            setIsEnrolled(true);
-            setIsPaid(true);
-          } else if (bookDetails.hasHotel) {
-            setIsEnrolled(true);
-            setIsPaid(true);
-          }
-        };
-      })
-      .catch(() => {
-        toast("Não foi possível encontrar sua inscrição");
-      });
+      .then(res => {if (res.status === 200) setIsPaid(true);});
   }, []);
 
   function RenderProperPaymentStatus() {
@@ -38,8 +26,8 @@ export default function PaymentForm() {
       <>
         {
           isPaid
-            ? <ReservationOverview isPaid={isPaid} />
-            : <Ticket />
+            ? <ReservationOverview isPaid={isPaid}/>
+            : <Ticket setIsPaid={setIsPaid}/>
         }
       </>
     );
