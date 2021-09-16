@@ -7,6 +7,7 @@ import useApi from "../../hooks/useApi";
 
 import { DashWarning } from "../Dashboard/DashWarning";
 import Dates from "./ActivitiesOptions/Dates";
+import ActivitiesBoard from "./ActivitiesOptions/ActivitiesBoard";
 
 export default function ActivityForm() {
   const { booking } = useApi();
@@ -49,7 +50,8 @@ export default function ActivityForm() {
             ? <DashWarning variant="h6">
               Sua modalidade de ingresso não necessita escolher <br/> atividade. Você terá acesso a todas as atividades.
             </DashWarning>
-            : <Dates selectedDay={selectedDay} setSelectedDay={setSelectedDay} activities={activities} />
+            : <><Dates selectedDay={selectedDay} setSelectedDay={setSelectedDay} activities={activities} />
+              <ActivitiesBoard selectedDay={selectedDay} activities={activities}/></>
           : <DashWarning variant="h6">
               Você precisa ter confirmado pagamento antes <br/> de fazer a escolha de atividades
           </DashWarning>
