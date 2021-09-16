@@ -3,6 +3,7 @@ import styled from "styled-components";
 const StyledHotels = styled.div`
   display: flex;
   overflow-x: scroll;
+  overflow: hidden;
 `;
 
 const StyledHotelCard = styled.div`
