@@ -6,6 +6,7 @@ import EnrollmentApi from "../services/EnrollmentApi";
 import TicketApi from "../services/TicketApi";
 import BookingApi from "../services/BookingApi";
 import HotelApi from "../services/HotelApi";
+import RoomsApi from "../services/RoomsApi";
 import ActivitiesApi from "../services/ActivitiesApi";
 
 export default function useApi() {
@@ -18,6 +19,7 @@ export default function useApi() {
     ticket: new TicketApi(),
     booking: new BookingApi(),
     hotel: new HotelApi(),
-    activitie: new ActivitiesApi(),
+    rooms: new RoomsApi(),
+    activitie: new ActivitiesApi()
   };
 }
