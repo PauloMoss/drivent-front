@@ -26,7 +26,7 @@ export default function ActivitiesBoard({ selectedDay, activities }) {
         {eventLocations.map(location => {
           return <Collumn key={location + "collumn"}>
             {selectedDayActivities[location]?.map(activity => {
-              return <ActivityCard key={activity.id} activity={activity} />;
+              return <ActivityCard key={activity.id} activityData={activity} />;
             })}
           </Collumn>;
         })}

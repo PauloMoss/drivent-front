@@ -19,7 +19,6 @@ export default function useApi() {
     ticket: new TicketApi(),
     booking: new BookingApi(),
     hotel: new HotelApi(),
-    rooms: new RoomsApi(),
-    activitie: new ActivitiesApi()
+    activity: new ActivitiesApi(),
   };
 }

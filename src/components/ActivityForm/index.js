@@ -11,7 +11,7 @@ import ActivitiesBoard from "./ActivitiesOptions/ActivitiesBoard";
 
 export default function ActivityForm() {
   const { booking } = useApi();
-  const { activitie } = useApi();
+  const { activity } = useApi();
   const [activities, setActitivites] = useState();
   const [isPaid, setIsPaid] = useState(false);
   const [isOnline, setIsOnline] = useState(null);
@@ -30,7 +30,7 @@ export default function ActivityForm() {
         toast("Não foi possível encontrar sua reserva");
       });
 
-    activitie.getActivities()
+    activity.getActivities()
       .then(response => {
         if(response.status === 200) {
           setActitivites(response.data);
@@ -39,7 +39,7 @@ export default function ActivityForm() {
       .catch(() => {
         toast("Não foi possível encontrar as atividades");
       });
-  }, []);
+  }, [selectedDay]);
 
   return (
     <>
