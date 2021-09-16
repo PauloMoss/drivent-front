@@ -9,4 +9,12 @@ export default class ActivitiesApi extends AuthenticatedApi {
       }
     });
   }
+
+  enrollUser(body) {
+    return api.post("/activities", body, {
+      headers: {
+        ...this.getAuthorizationHeader()
+      }
+    });
+  }
 };

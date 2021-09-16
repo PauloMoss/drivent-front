@@ -18,6 +18,6 @@ export default function useApi() {
     ticket: new TicketApi(),
     booking: new BookingApi(),
     hotel: new HotelApi(),
-    activitie: new ActivitiesApi(),
+    activity: new ActivitiesApi(),
   };
 }

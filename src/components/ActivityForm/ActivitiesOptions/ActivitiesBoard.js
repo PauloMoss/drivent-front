@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import ActivityCard from "./ActivityCard";
 
 export default function ActivitiesBoard({ selectedDay, activities }) {
+  console.log(activities);
   if(selectedDay===null) return null;
   const mappedEventDays = activities?.map(a => a.date);
   const mappedEventLocations = activities?.map(a => a.auditorium);
@@ -26,7 +27,7 @@ export default function ActivitiesBoard({ selectedDay, activities }) {
         {eventLocations.map(location => {
           return <Collumn key={location + "collumn"}>
             {selectedDayActivities[location]?.map(activity => {
-              return <ActivityCard key={activity.id} activity={activity} />;
+              return <ActivityCard key={activity.id} activityData={activity} />;
             })}
           </Collumn>;
         })}

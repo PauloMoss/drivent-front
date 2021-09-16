@@ -3,13 +3,19 @@ import { IoMdExit } from "react-icons/io";
 import { CgCloseO } from "react-icons/cg";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { ButtonBase } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { toast } from "react-toastify";
+import UserContext from "../../../contexts/UserContext";
+import useApi from "../../../hooks/useApi";
 
-export default function ActivityCard({ activity }) {
-  const { startTime, endTime, name, vacancies } = activity;
+export default function ActivityCard({ activityData }) {
+  console.log(activityData);
+  const { startTime, endTime, name, vacancies, id } = activityData;
   const halfHours = halfHourCount(startTime, endTime);
   const [inMyActivities, setInMyActivities ] = useState(false);
+  const { userData } = useContext(UserContext);
+  const { activity } = useApi();
+  console.log(userData);
 
   function halfHourCount(start, end) {
     const before = parseInt(start.replace(":", ""));
@@ -25,8 +31,17 @@ export default function ActivityCard({ activity }) {
     }else{
       if(vacancies>0) {
         //add to activities
-        toast("Atividade adicionada!✅");
-        setInMyActivities(true);
+        const body = { userId: userData.user.id, activityId: id };
+        console.log(body);
+        activity
+          .enrollUser(body)
+          .then((res) => {
+            toast("Atividade adicionada!✅");
+            setInMyActivities(true);
+          })
+          .catch(() => {
+            toast("Não foi possível se cadastrar na atividade, tente novamente");
+          });
       } else{
         toast("Atividade lotada!");
       }
