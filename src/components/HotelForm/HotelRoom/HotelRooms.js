@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
@@ -6,15 +6,21 @@ import useApi from "../../../hooks/useApi";
 import SectionTitle from "../../Form/SectionTitle";
 import BookingRoom from "../BookingRoom";
 import HotelRoomBox from "./HotelRoomBox";
+import UserContext from "../../../contexts/UserContext";
 
 export default function HotelRooms() {
   const { rooms } = useApi();
   const [hotelRooms, setHotelRooms] = useState(null);
   const [selectedRoom, setSelectedRoom] = useState(null);
+  const { userData } = useContext(UserContext);
+  const token = userData.token;
   const hotelId = 1;
+  console.log(selectedRoom);
 
-  rooms.getHotelRooms(hotelId, setHotelRooms);
-  selectedRoom && verifyChoosenVacancyRealTimeStatus(hotelRooms);
+  useEffect(() => {
+    rooms.getHotelRooms(hotelId, token, setHotelRooms);
+    selectedRoom && verifyChoosenVacancyRealTimeStatus(hotelRooms);
+  }, [selectedRoom]);
 
   function verifyChoosenVacancyRealTimeStatus(rooms) {
     const choosenRoom = rooms.find(r => r.id === selectedRoom.roomId);
