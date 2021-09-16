@@ -39,7 +39,7 @@ const Hotel = () => {
           />
         ))}
       </StyledHotels>
-      {hotel !== undefined && <HotelRoom />}
+      {selected !== undefined && <HotelRoom />}
     </>
   );
 };

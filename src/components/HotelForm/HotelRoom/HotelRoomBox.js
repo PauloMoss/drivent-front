@@ -1,30 +1,40 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import { IoPersonOutline, IoPersonSharp } from "react-icons/io5";
 
 export default function HotelRoomBox({ room, setSelectedRoom, selectedRoom }) {
   const { id, number, isAvailable, vacancies } = room;
+  const selected = selectedRoom?.roomId === id;
+  
+  useEffect(() => {
+    const selectedFound = vacancies.find(v => v.isSelected);
+    if(selectedFound) {
+      setSelectedRoom({ roomId: id, vacancyId: selectedFound.id });
+    }
+  }, []);
 
   return(
-    <Container isAvailable={isAvailable} isSelected={selectedRoom?.room === id}>
+    <Container isAvailable={isAvailable} selected={selected}>
       <RoomNumber>{number}</RoomNumber>
       <RoomVacancy>
         {
           vacancies?.map(v => {
             return(
-              v.isFilled 
-                ? <Filled 
+              (selected && selectedRoom.vacancyId === v.id)
+                ?  <Selected 
                   key={v.id} 
-                  isAvailable={isAvailable}
-                />
-                : selectedRoom?.vacancy === v.id 
-                  ? <Selected 
+                  onClick={() => setSelectedRoom(null)}
+                /> 
+                
+                : v.isFilled 
+                  ? <Filled 
                     key={v.id} 
-                    onClick={() => setSelectedRoom(null)}
-                  /> 
+                    isAvailable={isAvailable}
+                  />
                   : <Unfilled 
                     key={v.id} 
                     isAvailable={isAvailable} 
-                    onClick={() => setSelectedRoom({ room: room.id, vacancy: v.id })}
+                    onClick={() => setSelectedRoom({ roomId: id, vacancyId: v.id })}
                   />
             );
           })
@@ -45,10 +55,11 @@ const Container = styled.div`
   border-radius: 10px;
   padding: 0 16px;
   margin-top: 10px;
+  margin-bottom: 45px;
 
   background-color: ${props => (
     props.isAvailable ? 
-      props.isSelected ?
+      props.selected ?
         "#FFEED2"
         : "transparent"
       : "#E9E9E9"
