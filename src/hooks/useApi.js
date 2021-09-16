@@ -6,6 +6,7 @@ import EnrollmentApi from "../services/EnrollmentApi";
 import TicketApi from "../services/TicketApi";
 import BookingApi from "../services/BookingApi";
 import HotelApi from "../services/HotelApi";
+import RoomsApi from "../services/RoomsApi";
 import ActivitiesApi from "../services/ActivitiesApi";
 
 export default function useApi() {
