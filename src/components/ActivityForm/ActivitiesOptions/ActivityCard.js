@@ -19,13 +19,13 @@ export default function ActivityCard({ activity }) {
 
   function handleClick() {
     if(inMyActivities) {
-      //remove from activitis
-      toast("Atividade removida");
+      //remove from activities
+      toast("Atividade removida.");
       setInMyActivities(false);
     }else{
       if(vacancies>0) {
-        //remove from activitis
-        toast("Atividade adicionada");
+        //add to activities
+        toast("Atividade adicionada!✅");
         setInMyActivities(true);
       } else{
         toast("Atividade lotada!");
