@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import useApi from "../../hooks/useApi";
 import { DashWarning } from "../Dashboard/DashWarning";
-import HotelRooms from "./HotelRoom/HotelRooms";
+import Hotel from "./Hotel";
 import HotelOverview from "./HotelOverview";
 import UserContext from "../../contexts/UserContext";
 
@@ -13,11 +13,11 @@ export default function HotelForm() {
   const { booking } = useApi();
   const { userData, setUserData } = useContext(UserContext);
   const [isOnline, setIsOnline] = useState(null);
-  console.log(userData);
+
   useEffect(() => {
     booking.getBookingInfo()
       .then(response => {
-        if(response.status === 200) {
+        if (response.status === 200) {
           const bookDetails = response.data;
           setUserData({ ...userData, booking: { id: bookDetails.id, roomId: bookDetails.roomId } });
           setIsOnline(bookDetails.isOnline);
@@ -32,9 +32,9 @@ export default function HotelForm() {
     return (
       <>
         {
-          userData.booking.roomId
+          userData.booking?.roomId
             ? <HotelOverview />
-            : <HotelRooms />
+            : <Hotel />
         }
       </>
     );
@@ -47,11 +47,11 @@ export default function HotelForm() {
         userData.paid
           ? isOnline
             ? <DashWarning variant="h6">
-              Sua modalidade de ingresso não inclui hospedagem <br/> Prossiga para a escolha de atividades
+              Sua modalidade de ingresso não inclui hospedagem <br /> Prossiga para a escolha de atividades
             </DashWarning>
             : <RenderProperHotelStatus />
           : <DashWarning variant="h6">
-              Você precisa ter confirmado pagamento antes <br/> de fazer a escolha de hospedagem
+            Você precisa ter confirmado pagamento antes <br /> de fazer a escolha de hospedagem
           </DashWarning>
       }
     </>

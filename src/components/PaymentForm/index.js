@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 import { toast } from "react-toastify";
@@ -8,18 +8,24 @@ import useApi from "../../hooks/useApi";
 import { DashWarning } from "../Dashboard/DashWarning";
 import Ticket from "./TicketModality/Ticket";
 import ReservationOverview from "./ReservationOverview";
-import UserContext from "../../contexts/UserContext";
 
 export default function PaymentForm() {
-  const { enrollment } = useApi();
+  const { booking } = useApi();
   const [isEnrolled, setIsEnrolled] = useState(false);
-  const { userData } = useContext(UserContext);
+  const [isPaid, setIsPaid] = useState(false);
   
   useEffect(() => {
-    enrollment.getPersonalInformations()
+    booking.getBookingInfo()
       .then((response) => {
         if (response.status === 200) {
-          setIsEnrolled(true);
+          const bookDetails = response.data;
+          if (bookDetails.isOnline) {
+            setIsEnrolled(true);
+            setIsPaid(true);
+          } else if (bookDetails.hasHotel) {
+            setIsEnrolled(true);
+            setIsPaid(true);
+          }
         };
       })
       .catch(() => {
@@ -31,8 +37,8 @@ export default function PaymentForm() {
     return (
       <>
         {
-          userData.hasReservation
-            ? <ReservationOverview />
+          isPaid
+            ? <ReservationOverview isPaid={isPaid} />
             : <Ticket />
         }
       </>

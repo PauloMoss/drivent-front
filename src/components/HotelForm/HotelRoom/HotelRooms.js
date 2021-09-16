@@ -15,7 +15,6 @@ export default function HotelRooms() {
   const { userData } = useContext(UserContext);
   const token = userData.token;
   const hotelId = 1;
-  console.log(selectedRoom);
 
   useEffect(() => {
     rooms.getHotelRooms(hotelId, token, setHotelRooms);
@@ -31,24 +30,24 @@ export default function HotelRooms() {
     };
   }
 
-  return(
+  return (
     <>
       <SectionTitle>Ótima pedida! Agora escolha seu quarto:</SectionTitle>
       <RoomsContainer>
         {
           hotelRooms?.map((rq) => {
             return (
-              <HotelRoomBox 
-                key={rq.id} 
-                room={rq} 
-                setSelectedRoom={setSelectedRoom} 
-                selectedRoom={selectedRoom}/>
+              <HotelRoomBox
+                key={rq.id}
+                room={rq}
+                setSelectedRoom={setSelectedRoom}
+                selectedRoom={selectedRoom} />
             );
           })
         }
       </RoomsContainer>
       <BookingRoom selectedRoom={selectedRoom}/>
-      
+
     </>
   );
 };
