@@ -8,18 +8,17 @@ import BookingRoom from "../BookingRoom";
 import HotelRoomBox from "./HotelRoomBox";
 import UserContext from "../../../contexts/UserContext";
 
-export default function HotelRooms() {
+export default function HotelRooms({ hotelId }) {
   const { rooms } = useApi();
   const [hotelRooms, setHotelRooms] = useState(null);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const { userData } = useContext(UserContext);
   const token = userData.token;
-  const hotelId = 1;
 
   useEffect(() => {
     rooms.getHotelRooms(hotelId, token, setHotelRooms);
     selectedRoom && verifyChoosenVacancyRealTimeStatus(hotelRooms);
-  }, [selectedRoom]);
+  }, [selectedRoom, hotelId]);
 
   function verifyChoosenVacancyRealTimeStatus(rooms) {
     const choosenRoom = rooms.find(r => r.id === selectedRoom.roomId);
