@@ -16,7 +16,7 @@ export default function HotelRooms() {
   useEffect(() => {
     hotel.getHotelRooms(hotelId)
       .then(response => {
-        if(response.status === 200) {
+        if (response.status === 200) {
           setHotelRooms(response.data);
         };
       })
@@ -25,24 +25,24 @@ export default function HotelRooms() {
       });
   }, []);
 
-  return(
+  return (
     <>
       <SectionTitle>Ótima pedida! Agora escolha seu quarto:</SectionTitle>
       <RoomsContainer>
         {
           hotelRooms?.map((rq) => {
             return (
-              <HotelRoomBox 
-                key={rq.id} 
-                room={rq} 
-                setSelectedRoom={setSelectedRoom} 
-                selectedRoom={selectedRoom}/>
+              <HotelRoomBox
+                key={rq.id}
+                room={rq}
+                setSelectedRoom={setSelectedRoom}
+                selectedRoom={selectedRoom} />
             );
           })
         }
       </RoomsContainer>
       <BookingRoom selectedRoom={selectedRoom}/>
-      
+
     </>
   );
 };
