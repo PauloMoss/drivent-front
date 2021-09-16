@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 import { toast } from "react-toastify";
@@ -8,15 +8,25 @@ import useApi from "../../hooks/useApi";
 import { DashWarning } from "../Dashboard/DashWarning";
 import Dates from "./ActivitiesOptions/Dates";
 import ActivitiesBoard from "./ActivitiesOptions/ActivitiesBoard";
+import UserContext from "../../contexts/UserContext";
 
 export default function ActivityForm() {
   const { booking } = useApi();
   const { activity } = useApi();
+  
+  const { activitiesws } = useApi();
+  const { userData } = useContext(UserContext);
+  const token = userData.token;
+
   const [activities, setActitivites] = useState();
   const [isPaid, setIsPaid] = useState(false);
   const [isOnline, setIsOnline] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
   
+  useEffect(() => {
+    activitiesws.getActivities( token, setActitivites);
+  }, []);
+
   useEffect(() => {
     booking.getBookingInfo()
       .then(response => {

@@ -8,6 +8,7 @@ import BookingApi from "../services/BookingApi";
 import HotelApi from "../services/HotelApi";
 import RoomsApi from "../services/RoomsApi";
 import ActivitiesApi from "../services/ActivitiesApi";
+import ActivitiesWsApi from "../services/ActivitiesWsApi";
 
 export default function useApi() {
   return {
@@ -20,5 +21,7 @@ export default function useApi() {
     booking: new BookingApi(),
     hotel: new HotelApi(),
     activity: new ActivitiesApi(),
+    rooms: new RoomsApi(),
+    activitiesws: new ActivitiesWsApi(),
   };
 }
