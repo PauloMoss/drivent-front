@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import { toast } from "react-toastify";
 
-import { OptionBoxWrapper } from "./OptionBoxWrapper";
-import SectionTitle from "../Form/SectionTitle";
-import { OptionBox, Description, Price } from "./OptionBox";
-import UserContext from "../../contexts/UserContext";
+import { OptionBoxWrapper } from "../OptionBoxWrapper";
+import SectionTitle from "../../Form/SectionTitle";
+import { OptionBox, Description, Price } from "../OptionBox";
+import UserContext from "../../../contexts/UserContext";
 
 export default function TicketOptions({ title, selectedOption, setSelectedOption, apiFunction }) {
   const [options, setOptions] = useState();

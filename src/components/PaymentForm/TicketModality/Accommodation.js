@@ -1,6 +1,6 @@
 import useApi from "../../../hooks/useApi";
 
-import TicketOptions from "../TicketOptions";
+import TicketOptions from "./TicketOptions";
 
 export default function Accommodation({ selectedAccommodation, setSelectedAccommodation }) {
   const { ticket } = useApi();

@@ -1,6 +1,6 @@
 import useApi from "../../../hooks/useApi";
 
-import TicketOptions from "../TicketOptions";
+import TicketOptions from "./TicketOptions";
 
 export default function Modality({ selectedTicket, setSelectedTicket }) {
   const { ticket } = useApi();

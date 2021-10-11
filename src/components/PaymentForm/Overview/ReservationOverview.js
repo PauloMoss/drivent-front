@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 
-import useApi from "../../hooks/useApi";
+import useApi from "../../../hooks/useApi";
 
 import { OverviewBox } from "./OverviewBox";
-import Button from "../Form/Button";
-import FinalizePayment from "./FinalizePayment";
+import Button from "../../Form/Button";
+import FinalizePayment from "../FinalizePayment";
 
 export default function ReservationOverview({ isPaid }) {
   const [ticket, setTicket] = useState();

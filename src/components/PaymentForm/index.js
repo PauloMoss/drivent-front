@@ -6,7 +6,7 @@ import useApi from "../../hooks/useApi";
 
 import { DashWarning } from "../Dashboard/DashWarning";
 import Ticket from "./TicketModality/Ticket";
-import ReservationOverview from "./ReservationOverview";
+import ReservationOverview from "./Overview/ReservationOverview";
 import UserContext from "../../contexts/UserContext";
 
 export default function PaymentForm() {
